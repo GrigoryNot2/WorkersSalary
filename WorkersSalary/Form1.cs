@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Data.Sqlite;
 
 namespace WorkersSalary
 {
@@ -15,6 +16,15 @@ namespace WorkersSalary
         public Form1()
         {
             InitializeComponent();
+            string connectionString = "data source = workerssalary.db";
+
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+
+                SqliteCommand command = new SqliteCommand();
+                command.CommandText=""
+            }
         }
 
     }
