@@ -23,7 +23,7 @@ namespace WorkersSalary
                 connection.Open();
 
                 SqliteCommand command = new SqliteCommand();
-                command.CommandText=""
+                command.CommandText = "CREATE IF NOT EXIST TABLE workers(_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Tn INTEGER NOT NULL UNIQUE, Name TEXT NOT NULL";
             }
         }
 
