@@ -28,11 +28,14 @@ namespace WorkersSalary
                 command.CommandText = "SELECT COUNT(*) FROM workers";
                 number = (Int64)command.ExecuteScalar();
                 richTextBox1.Text = $"{number}";
-
-                command.CommandText = "INSERT INTO workers(Tn, Name) VALUES (111112, 'Josh'), (111113, 'Nikc')";
-                number = command.ExecuteNonQuery();
-                richTextBox1.Text = $"\n{number}";
+                if (number == 0)
+                {
+                    command.CommandText = "INSERT INTO workers(Tn, Name) VALUES (111112, 'Josh'), (111113, 'Nikc')";
+                    number = command.ExecuteNonQuery();
+                    richTextBox1.Text = $"\n{number}";
+                }
             }
+
         }
     }
 }
