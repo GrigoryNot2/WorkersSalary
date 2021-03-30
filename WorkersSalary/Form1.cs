@@ -13,10 +13,12 @@ namespace WorkersSalary
 {
     public partial class Form1 : Form
     {
+        private static List<Worker> Workers;
+        static string connectionString = "data source = workerssalary.db";
+
         public Form1()
         {
             InitializeComponent();
-            string connectionString = "data source = workerssalary.db";
 
             using (var connection = new SqliteConnection(connectionString))
             {
@@ -30,7 +32,7 @@ namespace WorkersSalary
                                       ")";
                 command.Connection = connection;
                 Int64 number = command.ExecuteNonQuery();   //ExecuteScalar() возвращает объект, который не может быть приведён к Int32
-                richTextBox1.Text += $"Таблица Workers создана: {number}";
+                richTextBox1.Text += $"Таблица Workers создана";
                 command.CommandText = "SELECT COUNT(*) FROM workers";
                 number = (Int64)command.ExecuteScalar();
                 richTextBox1.Text += $"\nКоличество строк в Workers: {number}";
@@ -53,7 +55,7 @@ namespace WorkersSalary
                                       "       ON DELETE CASCADE" +
                                       ")";
                 number = command.ExecuteNonQuery();
-                richTextBox1.Text += $"\nТаблица Salary создана: {number}";
+                richTextBox1.Text += $"\nТаблица Salary создана";
                 command.CommandText = "SELECT COUNT(*) FROM Salary";
                 number = (Int64)command.ExecuteScalar();
                 richTextBox1.Text += $"\nКоличество строк в Salary: {number}";
@@ -66,8 +68,55 @@ namespace WorkersSalary
                     number = command.ExecuteNonQuery();
                     richTextBox1.Text += $"\nДобавлено строк в Salary: {number}";
                 }
+               
+                //command.CommandText = "SELECT * FROM Workers";   удалить потом
+                //SqliteDataReader reader = command.ExecuteReader();
+                //if (reader.HasRows)
+                //{
+                    
+                //}
             }
+            Workers = GetWorkers();
+            dataGridView1.DataSource = Workers;
 
+        }
+        class Worker
+        {
+            public Worker(int id, int tn, string name)
+            {
+                Id = id;
+                Tn = tn;
+                Name = name;
+            }
+            public int Id { get; private set; }
+            public int Tn { get; private set; }
+            public string Name { get; private set; }
+        }
+        private List<Worker> GetWorkers()
+        {
+            List<Worker> workers = new List<Worker>();
+            string sql = "SELECT * FROM Workers";
+            using(SqliteConnection connection=new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                using(SqliteDataReader reader=command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32("_id");
+                            int tn = reader.GetInt32("Tn");
+                            string name = reader.GetString("Name");
+
+                            Worker worker = new Worker(id, tn, name);
+                            workers.Add(worker);
+                        }
+                    }
+                }
+            }
+            return workers;
         }
     }
 }
