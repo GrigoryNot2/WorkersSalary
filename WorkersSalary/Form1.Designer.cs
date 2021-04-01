@@ -38,10 +38,9 @@ namespace WorkersSalary
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(2, 484);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.richTextBox1.Location = new System.Drawing.Point(2, 363);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(799, 115);
+            this.richTextBox1.Size = new System.Drawing.Size(700, 87);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -49,31 +48,33 @@ namespace WorkersSalary
             // 
             this.dataGridWorkers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridWorkers.Location = new System.Drawing.Point(2, 1);
+            this.dataGridWorkers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridWorkers.Name = "dataGridWorkers";
             this.dataGridWorkers.RowHeadersWidth = 51;
             this.dataGridWorkers.RowTemplate.Height = 29;
-            this.dataGridWorkers.Size = new System.Drawing.Size(799, 242);
+            this.dataGridWorkers.Size = new System.Drawing.Size(699, 182);
             this.dataGridWorkers.TabIndex = 1;
+            this.dataGridWorkers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridWorkers_DataBindingComplete);
             // 
             // dataGridSalaries
             // 
             this.dataGridSalaries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSalaries.Location = new System.Drawing.Point(2, 249);
+            this.dataGridSalaries.Location = new System.Drawing.Point(2, 187);
+            this.dataGridSalaries.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridSalaries.Name = "dataGridSalaries";
             this.dataGridSalaries.RowHeadersWidth = 51;
             this.dataGridSalaries.RowTemplate.Height = 29;
-            this.dataGridSalaries.Size = new System.Drawing.Size(799, 228);
+            this.dataGridSalaries.Size = new System.Drawing.Size(699, 171);
             this.dataGridSalaries.TabIndex = 2;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 600);
+            this.ClientSize = new System.Drawing.Size(704, 450);
             this.Controls.Add(this.dataGridSalaries);
             this.Controls.Add(this.dataGridWorkers);
             this.Controls.Add(this.richTextBox1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).EndInit();

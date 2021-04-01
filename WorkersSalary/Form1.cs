@@ -13,9 +13,9 @@ namespace WorkersSalary
 {
     public partial class Form1 : Form
     {
-        private static List<Worker> Workers;
         private static List<Salary> Salaries;
         static string connectionString = "data source = workerssalary.db";
+        private static List<Worker> Workers = GetWorkers();
 
         public Form1()
         {
@@ -82,52 +82,16 @@ namespace WorkersSalary
                     number = command.ExecuteNonQuery();
                     richTextBox1.Text += $"Добавлено строк в Salary: {number}\n";
                 }
-
-                //command.CommandText = "SELECT * FROM Workers";   удалить потом
-                //SqliteDataReader reader = command.ExecuteReader();
-                //if (reader.HasRows)
-                //{
-
-                //}
+                dataGridWorkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridWorkers.MultiSelect = false;
+                dataGridWorkers.DataSource = Workers;
+                dataGridWorkers.Columns["Id"].Visible = false;
             }
-            Workers = GetWorkers();
-            dataGridWorkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridWorkers.MultiSelect = false;
-            dataGridWorkers.DataSource = Workers;
-            Worker selectedWorker = (Worker)dataGridWorkers.CurrentRow.DataBoundItem;
-            Salaries = GetSalaries(selectedWorker.Tn);
-            dataGridSalaries.DataSource = Salaries;
         }
+        //Salaries = GetSalaries(selectedWorker.Tn);
+        //dataGridSalaries.DataSource = Salaries;
 
-        class Worker
-        {
-            public Worker(int id, int tn, string name)
-            {
-                Id = id;
-                Tn = tn;
-                Name = name;
-            }
-            public int Id { get; private set; }
-            public int Tn { get; private set; }
-            public string Name { get; private set; }
-        }
-
-        class Salary
-        {
-            public Salary( int id, int tn, float salary, int month)
-            {
-                Id = id;
-                Tn = tn;
-                Pay = salary;
-                Montn = month;
-            }
-            public int Id { get; private set; }
-            public int Tn { get; private set; }
-            public float Pay { get; private set; }
-            public int Montn { get; private set; }
-        }
-
-        private List<Worker> GetWorkers()
+        private static List<Worker> GetWorkers()
         {
             List<Worker> workers = new List<Worker>();
             string sql = "SELECT * FROM Workers";
@@ -180,8 +144,12 @@ namespace WorkersSalary
                     }
                 }
             }
-
             return Salaries;
+        }
+
+        private void dataGridWorkers_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridWorkers.ClearSelection();
         }
     }
 }
