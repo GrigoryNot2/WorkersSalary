@@ -91,8 +91,8 @@ namespace WorkersSalary
             }
             Workers = GetWorkers();
             dataGridView1.DataSource = Workers;
-
         }
+
         class Worker
         {
             public Worker(int id, int tn, string name)
@@ -105,6 +105,22 @@ namespace WorkersSalary
             public int Tn { get; private set; }
             public string Name { get; private set; }
         }
+
+        class Salary
+        {
+            public Salary( int id, int tn, decimal salary, int month)
+            {
+                Id = id;
+                Tn = tn;
+                Pay = salary;
+                Montn = month;
+            }
+            public int Id { get; private set; }
+            public int Tn { get; private set; }
+            public decimal Pay { get; private set; }
+            public int Montn { get; private set; }
+        }
+
         private List<Worker> GetWorkers()
         {
             List<Worker> workers = new List<Worker>();
@@ -131,5 +147,6 @@ namespace WorkersSalary
             }
             return workers;
         }
+
     }
 }
