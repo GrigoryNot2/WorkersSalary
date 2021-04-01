@@ -24,49 +24,59 @@ namespace WorkersSalary
             {
                 connection.Open();
                 SqliteCommand command = new SqliteCommand();
-                command.CommandText = "CREATE TABLE IF NOT EXISTS Workers(" +
-                                      "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
-                                      "Tn INTEGER NOT NULL UNIQUE," +
-                                     //"Tn INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"+
-                                      "Name TEXT NOT NULL" +
-                                      ")";
+                Int64 number;
                 command.Connection = connection;
-                Int64 number = command.ExecuteNonQuery();   //ExecuteScalar() возвращает объект, который не может быть приведён к Int32
-                richTextBox1.Text += $"Таблица Workers создана";
-                command.CommandText = "SELECT COUNT(*) FROM workers";
-                number = (Int64)command.ExecuteScalar();
-                richTextBox1.Text += $"\nКоличество строк в Workers: {number}";
-                if (number == 0)
+                command.CommandText = "SELECT COUNT(name) FROM sqlite_master WHERE type='table' and name = 'Workers'";
+                if ((Int64)command.ExecuteScalar() == 0)
                 {
-                    command.CommandText = "INSERT INTO workers(Tn, Name) " +
-                                          "VALUES (111, 'Josh'), (222, 'Nikc'), (333, 'Ralph')";
+                    command.CommandText = "CREATE TABLE IF NOT EXISTS Workers(" +
+                                          "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
+                                          "Tn INTEGER NOT NULL UNIQUE," +
+                                          //"Tn INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"+
+                                          "Name TEXT NOT NULL" +
+                                          ")";
+                    number = command.ExecuteNonQuery();   //ExecuteScalar() возвращает объект, который не может быть приведён к Int32
+                    richTextBox1.Text += $"Таблица Workers создана";
+                    command.CommandText = "SELECT COUNT(*) FROM workers";
+                    number = (Int64)command.ExecuteScalar();
+                    richTextBox1.Text += $"\nКоличество строк в Workers: {number}";
+
+                    if (number == 0)
+                    {
+                        command.CommandText = "INSERT INTO workers(Tn, Name) " +
+                                              "VALUES (111, 'Josh'), (222, 'Nikc'), (333, 'Ralph')";
+                        number = command.ExecuteNonQuery();
+                        richTextBox1.Text += $"\nДобавлено строк в Workers: {number}";
+                    }
+                    command.CommandText = "CREATE TABLE IF NOT EXISTS Salary(" +
+                                          "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
+                                          "Tn INTEGER NOT NULL," +
+                                          "Salary REAL NOT NULL," +
+                                          "Month INTEGER NOT NULL," +
+                                          //"Data" +
+                                          "FOREIGN KEY (Tn)" +
+                                          "   REFERENCES Workers (Tn)" +
+                                          "       ON UPDATE CASCADE" +
+                                          "       ON DELETE CASCADE" +
+                                          ")";
                     number = command.ExecuteNonQuery();
-                    richTextBox1.Text += $"\nДобавлено строк в Workers: {number}";
+                    richTextBox1.Text += $"\nТаблица Salary создана";
                 }
-                command.CommandText = "CREATE TABLE IF NOT EXISTS Salary(" +
-                                      "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
-                                      "Tn INTEGER NOT NULL," +
-                                      "Salary REAL NOT NULL," +
-                                      "Month INTEGER NOT NULL," +
-                                      //"Data" +
-                                      "FOREIGN KEY (Tn)" +
-                                      "   REFERENCES Workers (Tn)" +
-                                      "       ON UPDATE CASCADE" +
-                                      "       ON DELETE CASCADE" +
-                                      ")";
-                number = command.ExecuteNonQuery();
-                richTextBox1.Text += $"\nТаблица Salary создана";
-                command.CommandText = "SELECT COUNT(*) FROM Salary";
-                number = (Int64)command.ExecuteScalar();
-                richTextBox1.Text += $"\nКоличество строк в Salary: {number}";
-                if (number==0)
+                command.CommandText = "SELECT COUNT(name) FROM sqlite_master WHERE type = 'table' AND name = 'Salary'";
+                if ((Int64)command.ExecuteScalar() == 0)
                 {
-                    command.CommandText = "INSERT INTO Salary(Tn, Salary, Month)" +
-                                        "VALUES (111, 654.3, 1), (111, 847.1, 2), (111, 456.4, 3), (111, 354.1, 4)," +
-                                        "       (222, 688.4, 1), (222, 641.5, 2), (222, 348.4, 3), (222, 871.2, 4)," +
-                                        "       (333, 547.2, 1), (333, 146.3, 2), (333, 478.2, 3), (333, 459.1, 4)";
-                    number = command.ExecuteNonQuery();
-                    richTextBox1.Text += $"\nДобавлено строк в Salary: {number}";
+                    command.CommandText = "SELECT COUNT(*) FROM Salary";
+                    number = (Int64)command.ExecuteScalar();
+                    richTextBox1.Text += $"\nКоличество строк в Salary: {number}";
+                    if (number == 0)
+                    {
+                        command.CommandText = "INSERT INTO Salary(Tn, Salary, Month)" +
+                                            "VALUES (111, 654.3, 1), (111, 847.1, 2), (111, 456.4, 3), (111, 354.1, 4)," +
+                                            "       (222, 688.4, 1), (222, 641.5, 2), (222, 348.4, 3), (222, 871.2, 4)," +
+                                            "       (333, 547.2, 1), (333, 146.3, 2), (333, 478.2, 3), (333, 459.1, 4)";
+                        number = command.ExecuteNonQuery();
+                        richTextBox1.Text += $"\nДобавлено строк в Salary: {number}";
+                    }
                 }
                
                 //command.CommandText = "SELECT * FROM Workers";   удалить потом
