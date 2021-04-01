@@ -14,6 +14,7 @@ namespace WorkersSalary
     public partial class Form1 : Form
     {
         private static List<Worker> Workers;
+        private static List<Salary> Salaries;
         static string connectionString = "data source = workerssalary.db";
 
         public Form1()
@@ -90,7 +91,12 @@ namespace WorkersSalary
                 //}
             }
             Workers = GetWorkers();
-            dataGridView1.DataSource = Workers;
+            dataGridWorkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridWorkers.MultiSelect = false;
+            dataGridWorkers.DataSource = Workers;
+            Worker selectedWorker = (Worker)dataGridWorkers.CurrentRow.DataBoundItem;
+            Salaries = GetSalaries(selectedWorker.Tn);
+            dataGridSalaries.DataSource = Salaries;
         }
 
         class Worker
@@ -108,7 +114,7 @@ namespace WorkersSalary
 
         class Salary
         {
-            public Salary( int id, int tn, decimal salary, int month)
+            public Salary( int id, int tn, float salary, int month)
             {
                 Id = id;
                 Tn = tn;
@@ -117,7 +123,7 @@ namespace WorkersSalary
             }
             public int Id { get; private set; }
             public int Tn { get; private set; }
-            public decimal Pay { get; private set; }
+            public float Pay { get; private set; }
             public int Montn { get; private set; }
         }
 
@@ -148,5 +154,34 @@ namespace WorkersSalary
             return workers;
         }
 
+        private List<Salary> GetSalaries(int Tn)
+        {
+            List<Salary> Salaries = new List<Salary>();
+            string sql = "SELECT * FROM Salaries WHERE Tn = '@Tn'";
+            using(SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                command.Parameters.Add(new SqliteParameter("@Tn", Tn));
+                using(SqliteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32("_id");
+                            int tn = reader.GetInt32("Tn");
+                            float salary = reader.GetFloat("Salary");
+                            int month = reader.GetInt32("Month");
+
+                            Salary Salary = new Salary(id, tn, salary, month);
+                            Salaries.Add(Salary);
+                        }
+                    }
+                }
+            }
+
+            return Salaries;
+        }
     }
 }
