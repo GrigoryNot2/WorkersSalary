@@ -54,6 +54,7 @@ namespace WorkersSalary
             this.dataGridWorkers.RowTemplate.Height = 29;
             this.dataGridWorkers.Size = new System.Drawing.Size(699, 182);
             this.dataGridWorkers.TabIndex = 1;
+            this.dataGridWorkers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridWorkers_CellClick);
             this.dataGridWorkers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridWorkers_DataBindingComplete);
             // 
             // dataGridSalaries

@@ -15,8 +15,7 @@ namespace WorkersSalary
     {
         private static List<Salary> Salaries;
         static string connectionString = "data source = workerssalary.db";
-        private static List<Worker> Workers = GetWorkers();
-
+        private static List<Worker> Workers;
         public Form1()
         {
             InitializeComponent();
@@ -84,14 +83,21 @@ namespace WorkersSalary
                 }
                 dataGridWorkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridWorkers.MultiSelect = false;
+                Workers = GetWorkers();
                 dataGridWorkers.DataSource = Workers;
                 dataGridWorkers.Columns["Id"].Visible = false;
+                dataGridWorkers.RowHeadersVisible = false;
+
+                dataGridSalaries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridSalaries.MultiSelect = false;
+                //dataGridSalaries.Columns["Id"].Visible = false;
+                dataGridSalaries.RowHeadersVisible = false;
             }
         }
         //Salaries = GetSalaries(selectedWorker.Tn);
         //dataGridSalaries.DataSource = Salaries;
 
-        private static List<Worker> GetWorkers()
+        private List<Worker> GetWorkers()
         {
             List<Worker> workers = new List<Worker>();
             string sql = "SELECT * FROM Workers";
@@ -121,12 +127,12 @@ namespace WorkersSalary
         private List<Salary> GetSalaries(int Tn)
         {
             List<Salary> Salaries = new List<Salary>();
-            string sql = "SELECT * FROM Salaries WHERE Tn = '@Tn'";
+            string sql = $"SELECT * FROM Salary WHERE Tn = '{Tn}'";
             using(SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
                 SqliteCommand command = new SqliteCommand(sql, connection);
-                command.Parameters.Add(new SqliteParameter("@Tn", Tn));
+                //command.Parameters.Add(new SqliteParameter("@Tn", Tn));
                 using(SqliteDataReader reader = command.ExecuteReader())
                 {
                     if (reader.HasRows)
@@ -150,6 +156,15 @@ namespace WorkersSalary
         private void dataGridWorkers_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridWorkers.ClearSelection();
+        }
+
+        private void dataGridWorkers_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int Tn = (int)((DataGridView)sender).SelectedRows[0].Cells["Tn"].Value;
+            Salaries = GetSalaries(Tn);
+            dataGridSalaries.DataSource = Salaries;
+            dataGridSalaries.RowHeadersVisible = false;
+            dataGridSalaries.Columns["Id"].Visible = false;
         }
     }
 }
