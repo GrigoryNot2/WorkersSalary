@@ -11,12 +11,12 @@ using Microsoft.Data.Sqlite;
 
 namespace WorkersSalary
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private static List<Salary> Salaries;
         static string connectionString = "data source = workerssalary.db";
         private static List<Worker> Workers;
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -169,6 +169,15 @@ namespace WorkersSalary
             dataGridSalaries.DataSource = Salaries;
             dataGridSalaries.RowHeadersVisible = false;
             dataGridSalaries.Columns["Id"].Visible = false;
+        }
+
+        private void addWorker_Click(object sender, EventArgs e)
+        {
+            string sql;
+            this.Enabled = false;
+            WorkerForm newForm = new WorkerForm();
+            newForm.Show();
+            this.Enabled = true;
         }
     }
 }
