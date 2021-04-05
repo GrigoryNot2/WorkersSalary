@@ -30,17 +30,24 @@ namespace WorkersSalary
         private void InitializeComponent()
         {
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.dataGridSalaries = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.dataGridWorkers = new System.Windows.Forms.DataGridView();
-            this.addWorker = new System.Windows.Forms.Button();
-            this.changeWorker = new System.Windows.Forms.Button();
+            this.WorkersPanel = new System.Windows.Forms.Panel();
+            this.WorkersBtns = new System.Windows.Forms.Panel();
             this.deleteWorker = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridSalaries)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.changeWorker = new System.Windows.Forms.Button();
+            this.addWorker = new System.Windows.Forms.Button();
+            this.dataGridWorkers = new System.Windows.Forms.DataGridView();
+            this.SalariesPanel = new System.Windows.Forms.Panel();
+            this.dataGridSalaries = new System.Windows.Forms.DataGridView();
+            this.SalariesBtns = new System.Windows.Forms.Panel();
+            this.addSalary = new System.Windows.Forms.Button();
+            this.changeSalary = new System.Windows.Forms.Button();
+            this.deleteSalary = new System.Windows.Forms.Button();
+            this.WorkersPanel.SuspendLayout();
+            this.WorkersBtns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).BeginInit();
+            this.SalariesPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridSalaries)).BeginInit();
+            this.SalariesBtns.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -54,48 +61,64 @@ namespace WorkersSalary
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
-            // dataGridSalaries
+            // WorkersPanel
             // 
-            this.dataGridSalaries.AllowUserToResizeColumns = false;
-            this.dataGridSalaries.AllowUserToResizeRows = false;
-            this.dataGridSalaries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridSalaries.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dataGridSalaries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSalaries.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridSalaries.Location = new System.Drawing.Point(0, 0);
-            this.dataGridSalaries.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridSalaries.MinimumSize = new System.Drawing.Size(0, 180);
-            this.dataGridSalaries.MultiSelect = false;
-            this.dataGridSalaries.Name = "dataGridSalaries";
-            this.dataGridSalaries.RowHeadersWidth = 51;
-            this.dataGridSalaries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridSalaries.RowTemplate.Height = 29;
-            this.dataGridSalaries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridSalaries.Size = new System.Drawing.Size(509, 478);
-            this.dataGridSalaries.TabIndex = 2;
+            this.WorkersPanel.Controls.Add(this.WorkersBtns);
+            this.WorkersPanel.Controls.Add(this.dataGridWorkers);
+            this.WorkersPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.WorkersPanel.Location = new System.Drawing.Point(0, 0);
+            this.WorkersPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.WorkersPanel.Name = "WorkersPanel";
+            this.WorkersPanel.Size = new System.Drawing.Size(509, 227);
+            this.WorkersPanel.TabIndex = 3;
             // 
-            // panel1
+            // WorkersBtns
             // 
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.dataGridWorkers);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(509, 227);
-            this.panel1.TabIndex = 3;
+            this.WorkersBtns.Controls.Add(this.deleteWorker);
+            this.WorkersBtns.Controls.Add(this.changeWorker);
+            this.WorkersBtns.Controls.Add(this.addWorker);
+            this.WorkersBtns.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.WorkersBtns.Location = new System.Drawing.Point(0, 193);
+            this.WorkersBtns.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.WorkersBtns.Name = "WorkersBtns";
+            this.WorkersBtns.Size = new System.Drawing.Size(509, 34);
+            this.WorkersBtns.TabIndex = 3;
             // 
-            // panel2
+            // deleteWorker
             // 
-            this.panel2.Controls.Add(this.deleteWorker);
-            this.panel2.Controls.Add(this.changeWorker);
-            this.panel2.Controls.Add(this.addWorker);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 193);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(509, 34);
-            this.panel2.TabIndex = 3;
+            this.deleteWorker.AutoSize = true;
+            this.deleteWorker.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.deleteWorker.Dock = System.Windows.Forms.DockStyle.Left;
+            this.deleteWorker.Location = new System.Drawing.Point(140, 0);
+            this.deleteWorker.Name = "deleteWorker";
+            this.deleteWorker.Size = new System.Drawing.Size(61, 34);
+            this.deleteWorker.TabIndex = 7;
+            this.deleteWorker.Text = "Удалить";
+            this.deleteWorker.UseVisualStyleBackColor = true;
+            // 
+            // changeWorker
+            // 
+            this.changeWorker.AutoSize = true;
+            this.changeWorker.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.changeWorker.Dock = System.Windows.Forms.DockStyle.Left;
+            this.changeWorker.Location = new System.Drawing.Point(69, 0);
+            this.changeWorker.Name = "changeWorker";
+            this.changeWorker.Size = new System.Drawing.Size(71, 34);
+            this.changeWorker.TabIndex = 6;
+            this.changeWorker.Text = "Изменить";
+            this.changeWorker.UseVisualStyleBackColor = true;
+            // 
+            // addWorker
+            // 
+            this.addWorker.AutoSize = true;
+            this.addWorker.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addWorker.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addWorker.Location = new System.Drawing.Point(0, 0);
+            this.addWorker.Name = "addWorker";
+            this.addWorker.Size = new System.Drawing.Size(69, 34);
+            this.addWorker.TabIndex = 5;
+            this.addWorker.Text = "Добавить";
+            this.addWorker.UseVisualStyleBackColor = true;
             // 
             // dataGridWorkers
             // 
@@ -118,72 +141,116 @@ namespace WorkersSalary
             this.dataGridWorkers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridWorkers_CellClick);
             this.dataGridWorkers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridWorkers_DataBindingComplete);
             // 
-            // addWorker
+            // SalariesPanel
             // 
-            this.addWorker.AutoSize = true;
-            this.addWorker.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addWorker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addWorker.Location = new System.Drawing.Point(0, 0);
-            this.addWorker.Name = "addWorker";
-            this.addWorker.Size = new System.Drawing.Size(69, 34);
-            this.addWorker.TabIndex = 5;
-            this.addWorker.Text = "Добавить";
-            this.addWorker.UseVisualStyleBackColor = true;
+            this.SalariesPanel.AutoSize = true;
+            this.SalariesPanel.Controls.Add(this.SalariesBtns);
+            this.SalariesPanel.Controls.Add(this.dataGridSalaries);
+            this.SalariesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SalariesPanel.Location = new System.Drawing.Point(0, 227);
+            this.SalariesPanel.Name = "SalariesPanel";
+            this.SalariesPanel.Size = new System.Drawing.Size(509, 251);
+            this.SalariesPanel.TabIndex = 4;
             // 
-            // changeWorker
+            // dataGridSalaries
             // 
-            this.changeWorker.AutoSize = true;
-            this.changeWorker.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.changeWorker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.changeWorker.Location = new System.Drawing.Point(69, 0);
-            this.changeWorker.Name = "changeWorker";
-            this.changeWorker.Size = new System.Drawing.Size(71, 34);
-            this.changeWorker.TabIndex = 6;
-            this.changeWorker.Text = "Изменить";
-            this.changeWorker.UseVisualStyleBackColor = true;
+            this.dataGridSalaries.AllowUserToResizeColumns = false;
+            this.dataGridSalaries.AllowUserToResizeRows = false;
+            this.dataGridSalaries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridSalaries.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridSalaries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridSalaries.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridSalaries.Location = new System.Drawing.Point(0, 0);
+            this.dataGridSalaries.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridSalaries.MinimumSize = new System.Drawing.Size(0, 180);
+            this.dataGridSalaries.MultiSelect = false;
+            this.dataGridSalaries.Name = "dataGridSalaries";
+            this.dataGridSalaries.RowHeadersWidth = 51;
+            this.dataGridSalaries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridSalaries.RowTemplate.Height = 29;
+            this.dataGridSalaries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridSalaries.Size = new System.Drawing.Size(509, 251);
+            this.dataGridSalaries.TabIndex = 3;
             // 
-            // deleteWorker
+            // SalariesBtns
             // 
-            this.deleteWorker.AutoSize = true;
-            this.deleteWorker.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.deleteWorker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.deleteWorker.Location = new System.Drawing.Point(140, 0);
-            this.deleteWorker.Name = "deleteWorker";
-            this.deleteWorker.Size = new System.Drawing.Size(61, 34);
-            this.deleteWorker.TabIndex = 7;
-            this.deleteWorker.Text = "Удалить";
-            this.deleteWorker.UseVisualStyleBackColor = true;
+            this.SalariesBtns.Controls.Add(this.deleteSalary);
+            this.SalariesBtns.Controls.Add(this.changeSalary);
+            this.SalariesBtns.Controls.Add(this.addSalary);
+            this.SalariesBtns.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.SalariesBtns.Location = new System.Drawing.Point(0, 206);
+            this.SalariesBtns.Name = "SalariesBtns";
+            this.SalariesBtns.Size = new System.Drawing.Size(509, 45);
+            this.SalariesBtns.TabIndex = 4;
+            // 
+            // addSalary
+            // 
+            this.addSalary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addSalary.Location = new System.Drawing.Point(0, 0);
+            this.addSalary.Name = "addSalary";
+            this.addSalary.Size = new System.Drawing.Size(75, 45);
+            this.addSalary.TabIndex = 0;
+            this.addSalary.Text = "Добавить";
+            this.addSalary.UseVisualStyleBackColor = true;
+            // 
+            // changeSalary
+            // 
+            this.changeSalary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.changeSalary.Location = new System.Drawing.Point(75, 0);
+            this.changeSalary.Name = "changeSalary";
+            this.changeSalary.Size = new System.Drawing.Size(75, 45);
+            this.changeSalary.TabIndex = 1;
+            this.changeSalary.Text = "Изменить";
+            this.changeSalary.UseVisualStyleBackColor = true;
+            // 
+            // deleteSalary
+            // 
+            this.deleteSalary.Dock = System.Windows.Forms.DockStyle.Left;
+            this.deleteSalary.Location = new System.Drawing.Point(150, 0);
+            this.deleteSalary.Name = "deleteSalary";
+            this.deleteSalary.Size = new System.Drawing.Size(75, 45);
+            this.deleteSalary.TabIndex = 2;
+            this.deleteSalary.Text = "Удалить";
+            this.deleteSalary.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 565);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.dataGridSalaries);
+            this.Controls.Add(this.SalariesPanel);
+            this.Controls.Add(this.WorkersPanel);
             this.Controls.Add(this.richTextBox1);
             this.MinimumSize = new System.Drawing.Size(352, 533);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridSalaries)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.WorkersPanel.ResumeLayout(false);
+            this.WorkersBtns.ResumeLayout(false);
+            this.WorkersBtns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).EndInit();
+            this.SalariesPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridSalaries)).EndInit();
+            this.SalariesBtns.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.DataGridView dataGridSalaries;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel WorkersPanel;
+        private System.Windows.Forms.Panel WorkersBtns;
         private System.Windows.Forms.DataGridView dataGridWorkers;
         private System.Windows.Forms.Button deleteWorker;
         private System.Windows.Forms.Button changeWorker;
         private System.Windows.Forms.Button addWorker;
+        private System.Windows.Forms.Panel SalariesPanel;
+        private System.Windows.Forms.DataGridView dataGridSalaries;
+        private System.Windows.Forms.Panel SalariesBtns;
+        private System.Windows.Forms.Button deleteSalary;
+        private System.Windows.Forms.Button changeSalary;
+        private System.Windows.Forms.Button addSalary;
     }
 }
 
