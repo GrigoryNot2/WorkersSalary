@@ -87,6 +87,10 @@ namespace WorkersSalary
                 dataGridWorkers.DataSource = Workers;
                 dataGridWorkers.Columns["Id"].Visible = false;
                 dataGridWorkers.RowHeadersVisible = false;
+                dataGridWorkers.Columns["Tn"].AutoSizeMode =
+                    DataGridViewAutoSizeColumnMode.Fill;
+                dataGridWorkers.Columns["Tn"].FillWeight = 30;
+
 
                 dataGridSalaries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridSalaries.MultiSelect = false;
