@@ -188,9 +188,9 @@ namespace WorkersSalary
             //обновить коллекцию и таблицу, выделить добавленного работника
 
 
-            WorkerForm newForm = new WorkerForm(this);
-            newForm.Owner = this;
-            newForm.ShowDialog();
+            //WorkerForm newForm = new WorkerForm(this);
+            //newForm.Owner = this;
+            //newForm.ShowDialog();
         }
 
         private void changeWorker_Click(object sender, EventArgs e)
@@ -204,28 +204,48 @@ namespace WorkersSalary
                 return;
             }
 
-            Worker worker = Workers[dataGridWorkers.CurrentRow.Index];
-            //Worker worker = Workers[(int)dataGridWorkers.CurrentRow.Cells["Tn"].Value];
-
-            WorkerForm workerForm = new WorkerForm(worker);
-            workerForm.ShowDialog();
-            
+            //int workerId = Workers[dataGridWorkers.CurrentRow.Index].Id;
 
             //передать в форму
+            WorkerForm workerForm = new WorkerForm(Workers[dataGridWorkers.CurrentRow.Index], Workers);
+            workerForm.Text = "Изменить данные работника";
+            workerForm.ShowDialog();
 
-            //проверить уникальность тн работника
+            //richTextBox1.Text += $"{Workers[dataGridWorkers.CurrentRow.Index].Tn} | {Workers[dataGridWorkers.CurrentRow.Index].Name}";
 
-            //если не уникальный - сообщить, вернуться в форму
+            //создать запрос на изменение
+            Worker worker = Workers[dataGridWorkers.CurrentRow.Index];
+            string sql = $"UPDATE workers SET " +
+                $"Tn = '{Workers[dataGridWorkers.CurrentRow.Index].Tn}', " +
+                $"Name = '{Workers[dataGridWorkers.CurrentRow.Index].Name}'" +
+                $"WHERE _id = {Workers[dataGridWorkers.CurrentRow.Index].Id}";
+            using(SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(sql, connection);
 
-            //если уникальный - получить данные работника из формы
+                //запрос на изменение
+                command.ExecuteNonQuery();
 
-            //если не изменились - сообщить, вернуться
+                //обновить коллекцию и таблицу
+                Workers = GetWorkers();
+                dataGridWorkers.DataSource = Workers;
 
-            //если изменились - создать строку на изменение
+                //выделить изменённую строку
 
-            //запрос на изменение
 
-            //обновить коллекцию и таблицу, выделить изменённую строку
+                //foreach (var worker in Workers)
+                //{
+                //    if (worker.Id == workerId)
+                //    {
+
+                //        dataGridWorkers.Rows[worker.].Selected = true;
+                //    }
+                //}
+            }
+            int index = Workers.IndexOf(worker);
+            index = Workers.FindIndex(x => x == worker);
+            dataGridWorkers.Rows[index].Selected = true;
         }
 
         private void deleteWorker_Click(object sender, EventArgs e)

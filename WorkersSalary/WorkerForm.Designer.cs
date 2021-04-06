@@ -39,36 +39,41 @@ namespace WorkersSalary
             // 
             // TnTb
             // 
-            this.TnTb.Location = new System.Drawing.Point(12, 42);
+            this.TnTb.Location = new System.Drawing.Point(10, 32);
+            this.TnTb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TnTb.Name = "TnTb";
-            this.TnTb.Size = new System.Drawing.Size(350, 27);
+            this.TnTb.Size = new System.Drawing.Size(307, 23);
             this.TnTb.TabIndex = 0;
             // 
             // NameTb
             // 
-            this.NameTb.Location = new System.Drawing.Point(12, 110);
+            this.NameTb.Location = new System.Drawing.Point(10, 82);
+            this.NameTb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NameTb.Name = "NameTb";
-            this.NameTb.Size = new System.Drawing.Size(350, 27);
+            this.NameTb.Size = new System.Drawing.Size(307, 23);
             this.NameTb.TabIndex = 1;
             // 
             // SaveBtn
             // 
             this.SaveBtn.AutoSize = true;
-            this.SaveBtn.Location = new System.Drawing.Point(12, 176);
+            this.SaveBtn.Location = new System.Drawing.Point(10, 132);
+            this.SaveBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SaveBtn.Name = "SaveBtn";
-            this.SaveBtn.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.SaveBtn.Size = new System.Drawing.Size(113, 30);
+            this.SaveBtn.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
+            this.SaveBtn.Size = new System.Drawing.Size(99, 25);
             this.SaveBtn.TabIndex = 2;
             this.SaveBtn.Text = "Сохранить";
             this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // CancelBtn
             // 
             this.CancelBtn.AutoSize = true;
-            this.CancelBtn.Location = new System.Drawing.Point(268, 176);
+            this.CancelBtn.Location = new System.Drawing.Point(234, 132);
+            this.CancelBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CancelBtn.Name = "CancelBtn";
-            this.CancelBtn.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.CancelBtn.Size = new System.Drawing.Size(94, 30);
+            this.CancelBtn.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
+            this.CancelBtn.Size = new System.Drawing.Size(82, 25);
             this.CancelBtn.TabIndex = 3;
             this.CancelBtn.Text = "Отмена";
             this.CancelBtn.UseVisualStyleBackColor = true;
@@ -76,33 +81,34 @@ namespace WorkersSalary
             // TnLbl
             // 
             this.TnLbl.AutoSize = true;
-            this.TnLbl.Location = new System.Drawing.Point(12, 19);
+            this.TnLbl.Location = new System.Drawing.Point(10, 14);
             this.TnLbl.Name = "TnLbl";
-            this.TnLbl.Size = new System.Drawing.Size(140, 20);
+            this.TnLbl.Size = new System.Drawing.Size(110, 15);
             this.TnLbl.TabIndex = 4;
             this.TnLbl.Text = "Табельный номер:";
             // 
             // NameLbl
             // 
             this.NameLbl.AutoSize = true;
-            this.NameLbl.Location = new System.Drawing.Point(12, 87);
+            this.NameLbl.Location = new System.Drawing.Point(10, 65);
             this.NameLbl.Name = "NameLbl";
-            this.NameLbl.Size = new System.Drawing.Size(120, 20);
+            this.NameLbl.Size = new System.Drawing.Size(95, 15);
             this.NameLbl.TabIndex = 5;
             this.NameLbl.Text = "Имя работника:";
             // 
             // WorkerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.CancelBtn;
-            this.ClientSize = new System.Drawing.Size(374, 218);
+            this.ClientSize = new System.Drawing.Size(327, 164);
             this.Controls.Add(this.NameLbl);
             this.Controls.Add(this.TnLbl);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.NameTb);
             this.Controls.Add(this.TnTb);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WorkerForm";

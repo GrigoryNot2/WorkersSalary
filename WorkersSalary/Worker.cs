@@ -14,8 +14,8 @@ namespace WorkersSalary
             Tn = tn;
             Name = name;
         }
-        public int Id { get; private set; }
-        public int Tn { get; private set; }
-        public string Name { get; private set; }
+        public int Id { get; set; }
+        public int Tn { get; set; }
+        public string Name { get; set; }
     }
 }
