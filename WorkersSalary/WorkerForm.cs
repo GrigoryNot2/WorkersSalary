@@ -16,7 +16,13 @@ namespace WorkersSalary
         {
             InitializeComponent();
             //this.StartPosition = FormStartPosition.CenterParent;
+        }
+        public WorkerForm(MainForm mf)
+        {
+            if (mf.)
+            {
 
+            }
         }
     }
 }

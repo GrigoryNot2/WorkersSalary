@@ -94,6 +94,7 @@ namespace WorkersSalary
             this.deleteWorker.TabIndex = 7;
             this.deleteWorker.Text = "Удалить";
             this.deleteWorker.UseVisualStyleBackColor = true;
+            this.deleteWorker.Click += new System.EventHandler(this.deleteWorker_Click);
             // 
             // changeWorker
             // 
@@ -108,6 +109,7 @@ namespace WorkersSalary
             this.changeWorker.TabIndex = 6;
             this.changeWorker.Text = "Изменить";
             this.changeWorker.UseVisualStyleBackColor = true;
+            this.changeWorker.Click += new System.EventHandler(this.changeWorker_Click);
             // 
             // addWorker
             // 
@@ -229,7 +231,7 @@ namespace WorkersSalary
             this.dataGridSalaries.Size = new System.Drawing.Size(582, 325);
             this.dataGridSalaries.TabIndex = 3;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -239,7 +241,7 @@ namespace WorkersSalary
             this.Controls.Add(this.richTextBox1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(400, 695);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.WorkersPanel.ResumeLayout(false);
             this.WorkersBtns.ResumeLayout(false);
