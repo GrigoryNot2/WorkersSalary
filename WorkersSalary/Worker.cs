@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkersSalary
 {
-    class Worker
+    public class Worker
     {
         public Worker(int id, int tn, string name)
         {

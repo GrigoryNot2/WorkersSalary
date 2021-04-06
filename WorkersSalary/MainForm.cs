@@ -198,6 +198,19 @@ namespace WorkersSalary
             //извлечь данные выбранного работника, запомнить кто выбран,
             //если не выбран - сообщить, вернуться
 
+            if (dataGridWorkers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необхадимо выбрать работника");
+                return;
+            }
+
+            Worker worker = Workers[dataGridWorkers.CurrentRow.Index];
+            //Worker worker = Workers[(int)dataGridWorkers.CurrentRow.Cells["Tn"].Value];
+
+            WorkerForm workerForm = new WorkerForm(worker);
+            workerForm.ShowDialog();
+            
+
             //передать в форму
 
             //проверить уникальность тн работника

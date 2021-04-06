@@ -19,10 +19,15 @@ namespace WorkersSalary
         }
         public WorkerForm(MainForm mf)
         {
-            if (mf.)
-            {
+            //if (mf.)
+            //{
 
-            }
+            //}
+        }
+        public WorkerForm(Worker worker)
+        {
+            TnTb.Text = worker.Tn.ToString();
+
         }
     }
 }
