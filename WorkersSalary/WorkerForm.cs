@@ -45,7 +45,6 @@ namespace WorkersSalary
                 {
                     foreach (var worker in Workers)
                     {
-                        //int Tn = int.Parse(TnTb.Text);
                         if (worker.Tn == Tn)
                         {
                             MessageBox.Show("Такой табельный номер уже используется", "Внимание!");

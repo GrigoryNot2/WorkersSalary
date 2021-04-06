@@ -33,7 +33,6 @@ namespace WorkersSalary
                     command.CommandText = "CREATE TABLE IF NOT EXISTS Workers(" +
                                           "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," +
                                           "Tn INTEGER NOT NULL UNIQUE," +
-                                          //"Tn INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"+
                                           "Name TEXT NOT NULL" +
                                           ")";
                     number = command.ExecuteNonQuery();
@@ -59,7 +58,6 @@ namespace WorkersSalary
                                           "Tn INTEGER NOT NULL," +
                                           "Salary REAL NOT NULL," +
                                           "Month INTEGER NOT NULL," +
-                                          //"Data" +
                                           "FOREIGN KEY (Tn)" +
                                           "   REFERENCES Workers (Tn)" +
                                           "       ON UPDATE CASCADE" +
@@ -94,7 +92,6 @@ namespace WorkersSalary
 
                 dataGridSalaries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridSalaries.MultiSelect = false;
-                //dataGridSalaries.Columns["Id"].Visible = false;
                 dataGridSalaries.RowHeadersVisible = false;
             }
         }
@@ -197,28 +194,24 @@ namespace WorkersSalary
         {
             //извлечь данные выбранного работника, запомнить кто выбран,
             //если не выбран - сообщить, вернуться
-
             if (dataGridWorkers.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Необхадимо выбрать работника");
+                MessageBox.Show("Необхадимо выбрать работника", "Внимание!");
                 return;
             }
 
-            //int workerId = Workers[dataGridWorkers.CurrentRow.Index].Id;
+            int workerId = Workers[dataGridWorkers.CurrentRow.Index].Id;
 
             //передать в форму
             WorkerForm workerForm = new WorkerForm(Workers[dataGridWorkers.CurrentRow.Index], Workers);
             workerForm.Text = "Изменить данные работника";
             workerForm.ShowDialog();
 
-            //richTextBox1.Text += $"{Workers[dataGridWorkers.CurrentRow.Index].Tn} | {Workers[dataGridWorkers.CurrentRow.Index].Name}";
-
             //создать запрос на изменение
-            Worker worker = Workers[dataGridWorkers.CurrentRow.Index];
             string sql = $"UPDATE workers SET " +
-                $"Tn = '{Workers[dataGridWorkers.CurrentRow.Index].Tn}', " +
-                $"Name = '{Workers[dataGridWorkers.CurrentRow.Index].Name}'" +
-                $"WHERE _id = {Workers[dataGridWorkers.CurrentRow.Index].Id}";
+                            $"Tn = '{Workers[dataGridWorkers.CurrentRow.Index].Tn}', " +
+                            $"Name = '{Workers[dataGridWorkers.CurrentRow.Index].Name}'" +
+                            $"WHERE _id = {Workers[dataGridWorkers.CurrentRow.Index].Id}";
             using(SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -226,38 +219,65 @@ namespace WorkersSalary
 
                 //запрос на изменение
                 command.ExecuteNonQuery();
-
-                //обновить коллекцию и таблицу
-                Workers = GetWorkers();
-                dataGridWorkers.DataSource = Workers;
-
-                //выделить изменённую строку
-
-
-                //foreach (var worker in Workers)
-                //{
-                //    if (worker.Id == workerId)
-                //    {
-
-                //        dataGridWorkers.Rows[worker.].Selected = true;
-                //    }
-                //}
             }
-            int index = Workers.IndexOf(worker);
-            index = Workers.FindIndex(x => x == worker);
+
+            //обновить коллекцию и таблицу
+            Workers = GetWorkers();
+            dataGridWorkers.DataSource = Workers;
+
+            //выделить изменённую строку
+            int index = Workers.FindIndex(x => x.Id == workerId);
             dataGridWorkers.Rows[index].Selected = true;
+            dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+            //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+
+            //Обновить колекцию и таблицу зарплат
+            int Tn = Workers[index].Tn;
+            Salaries = GetSalaries(Tn);
+            dataGridSalaries.DataSource = Salaries;
+            dataGridSalaries.RowHeadersVisible = false;
+            dataGridSalaries.Columns["Id"].Visible = false;
         }
 
         private void deleteWorker_Click(object sender, EventArgs e)
         {
+            //если не выбран - сообщить, вернуться
+            if (dataGridWorkers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необхадимо выбрать работника", "Внимание!");
+                return;
+            }
+
             //извлечь данные выбранного работника, запомнить следующего,
             //или предыдущего, или никого
+            int index = -1;
+            if (dataGridWorkers.CurrentRow.Index - 1 >= 0 && dataGridWorkers.CurrentRow.Index - 1 <= dataGridWorkers.Rows.Count)
+            {
+                index = dataGridWorkers.CurrentRow.Index;
+            }
+            else if (dataGridWorkers.CurrentRow.Index + 1 >= 0 && dataGridWorkers.CurrentRow.Index + 1 <= dataGridWorkers.Rows.Count)
+            {
+                index = dataGridWorkers.CurrentRow.Index + 1;
+            }
 
-            //создать строку на удаление
+            //создать запрос на удаление
+            string sql = $"DELETE FROM workers WHERE _id = '{Workers[dataGridWorkers.CurrentRow.Index].Id}'";
+            using(SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                //запрос на удаление
+                command.ExecuteNonQuery();
+            }
 
-            //запрос на удаление
+            //обновить коллекцию и таблицу
+            Workers = GetWorkers();
+            dataGridWorkers.DataSource = Workers;
 
             //выделить сохранеённого работника, если есть
+            dataGridWorkers.Rows[index].Selected = true;
+            dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+            richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
         }
     }
 }
