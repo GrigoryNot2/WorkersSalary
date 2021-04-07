@@ -248,16 +248,16 @@ namespace WorkersSalary
                 return;
             }
 
-            //извлечь данные выбранного работника, запомнить следующего,
-            //или предыдущего, или никого
+            //извлечь данные выбранного работника, запомнить предыдущего,
+            //или следующего, или никого
             int index = -1;
-            if (dataGridWorkers.CurrentRow.Index - 1 >= 0 && dataGridWorkers.CurrentRow.Index - 1 <= dataGridWorkers.Rows.Count)
+            if (dataGridWorkers.CurrentRow.Index - 1 >= 0)// && dataGridWorkers.CurrentRow.Index - 1 < dataGridWorkers.Rows.Count)
+            {
+                index = dataGridWorkers.CurrentRow.Index - 1;
+            }
+            else if (dataGridWorkers.CurrentRow.Index + 1 < dataGridWorkers.Rows.Count)
             {
                 index = dataGridWorkers.CurrentRow.Index;
-            }
-            else if (dataGridWorkers.CurrentRow.Index + 1 >= 0 && dataGridWorkers.CurrentRow.Index + 1 <= dataGridWorkers.Rows.Count)
-            {
-                index = dataGridWorkers.CurrentRow.Index + 1;
             }
 
             //создать запрос на удаление
@@ -274,10 +274,13 @@ namespace WorkersSalary
             Workers = GetWorkers();
             dataGridWorkers.DataSource = Workers;
 
-            //выделить сохранеённого работника, если есть
-            dataGridWorkers.Rows[index].Selected = true;
-            dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
-            richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+            //выделить сохранённого работника, если есть
+            if (index > -1)
+            {
+                dataGridWorkers.Rows[index].Selected = true;
+                dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+                richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+            }
         }
     }
 }
