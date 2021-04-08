@@ -22,14 +22,23 @@ namespace WorkersSalary
         public WorkerForm(Worker w, List<Worker> workers)
         {
             InitializeComponent();
-            worker = w;
             Workers = workers;
-            TnTb.Text = worker.Tn.ToString();
-            NameTb.Text = worker.Name;
+            if (w != null)
+            {
+                worker = w;
+                TnTb.Text = worker.Tn.ToString();
+                NameTb.Text = worker.Name;
+            }
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            //Пустые поля
+            if (TnTb.Text == "" || NameTb.Text=="")
+            {
+                MessageBox.Show("Необходимо заполнить поля", "Внимание!");
+                return;
+            }
             //если данные не изменились - сообщить, вернуться
             if (TnTb.Text == worker.Tn.ToString() && NameTb.Text == worker.Name)
             {
@@ -51,6 +60,10 @@ namespace WorkersSalary
                             return;
                         }
                     }
+                }
+                if (true)
+                {
+
                 }
                 //Изменить объект в списке на главной форме и закрыть активную форму
                 worker.Tn = int.Parse(TnTb.Text);

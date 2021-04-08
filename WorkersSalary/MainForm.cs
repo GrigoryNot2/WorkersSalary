@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Data.Sqlite;
 
 namespace WorkersSalary
 {
@@ -170,9 +166,9 @@ namespace WorkersSalary
 
         private void addWorker_Click(object sender, EventArgs e)
         {
+            Worker worker = new Worker(null, null, null);
             //открыть форму
-
-            //проверить уникальность тн работника
+            WorkerForm workerForm = new WorkerForm(worker, Workers);
 
             //если не уникальный - сообщить, вернуться в форму
 
@@ -280,6 +276,18 @@ namespace WorkersSalary
                 dataGridWorkers.Rows[index].Selected = true;
                 dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
                 richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+            }
+
+            //Обновить колекцию и таблицу зарплат
+            if (index  >= 0)
+            {
+                int Tn = Workers[index].Tn;
+                Salaries = GetSalaries(Tn);
+                dataGridSalaries.DataSource = Salaries;
+            }
+            else
+            {
+                dataGridSalaries.DataSource = null;
             }
         }
     }
