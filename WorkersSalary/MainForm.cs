@@ -173,25 +173,42 @@ namespace WorkersSalary
         private void addWorker_Click(object sender, EventArgs e)
         {
             Worker worker = new Worker();
+            int index;
             //открыть форму
             WorkerForm workerForm = new WorkerForm(worker, Workers);
             workerForm.Text = "Добавить данные нового работника";
-            workerForm.ShowDialog();
 
-            if (workerForm.DialogResult != DialogResult.Cancel)
+            if (workerForm.ShowDialog() != DialogResult.Cancel)
             {
-                //создать строку на добавление
-                string sql = $"INSERT INTO Workers (Tn, Name) VALUES ({worker.Tn}, {worker.Name})";
-                //запрос на добавление
+                //создать запрос на добавление
+                string sql = $"INSERT INTO Workers (Tn, Name) VALUES ({worker.Tn}, '{worker.Name}')";
                 using (SqliteConnection connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     SqliteCommand command = new SqliteCommand(sql, connection);
+                    //запрос на добавление
                     command.ExecuteNonQuery();
+                    //Получить ид добавленного работника, чтобы потом его выделить в таблице
+                    sql = "SELECT last_insert_rowid()";
+                    index = (Int32)command.ExecuteScalar();
                 }
 
+                //обновить коллекцию и таблицу работников
+                Workers = GetWorkers();
+                dataGridWorkers.DataSource = Workers;
+                index = Workers.FindIndex(x => x.Id == index);
 
-                //обновить коллекцию и таблицу, выделить добавленного работника
+                //выделить изменённую строку
+                dataGridWorkers.Rows[index].Selected = true;
+                dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+                //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+
+                //Обновить колекцию и таблицу зарплат
+                int Tn = Workers[index].Tn;
+                Salaries = GetSalaries(Tn);
+                dataGridSalaries.DataSource = Salaries;
+                dataGridSalaries.RowHeadersVisible = false;
+                dataGridSalaries.Columns["Id"].Visible = false;
             }
         }
 
@@ -211,7 +228,6 @@ namespace WorkersSalary
             //передать в форму
             WorkerForm workerForm = new WorkerForm(Workers[dataGridWorkers.CurrentRow.Index], Workers);
             workerForm.Text = "Изменить данные работника";
-            //workerForm.ShowDialog();
 
             if (workerForm.ShowDialog() != DialogResult.Cancel)
             {

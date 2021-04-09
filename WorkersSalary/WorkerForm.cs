@@ -24,7 +24,10 @@ namespace WorkersSalary
             InitializeComponent();
             Workers = workers;
             worker = w;
-            TnTb.Text = worker.Tn.ToString();
+            if (worker.Tn != 0)
+            {
+                TnTb.Text = worker.Tn.ToString();
+            }
             NameTb.Text = worker.Name;
         }
 
@@ -39,7 +42,7 @@ namespace WorkersSalary
             //если данные не изменились - сообщить, вернуться
             if (TnTb.Text == worker.Tn.ToString() && NameTb.Text == worker.Name)
             {
-                MessageBox.Show("Данные не измененены", "Внимание!");
+                MessageBox.Show("Необходимо изменить данные работника", "Внимание!");
                 return;
             }
             else
@@ -61,6 +64,7 @@ namespace WorkersSalary
                 //Изменить (новый) объект в списке на главной форме и закрыть активную форму
                 worker.Tn = Tn;
                 worker.Name = NameTb.Text;
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
