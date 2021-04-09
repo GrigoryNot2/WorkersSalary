@@ -8,6 +8,7 @@ namespace WorkersSalary
 {
     public class Worker
     {
+        public Worker(){}
         public Worker(int id, int tn, string name)
         {
             Id = id;

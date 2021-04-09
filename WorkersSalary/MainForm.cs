@@ -166,15 +166,14 @@ namespace WorkersSalary
 
         private void addWorker_Click(object sender, EventArgs e)
         {
-            Worker worker = new Worker(null, null, null);
+            Worker worker = new Worker();
             //открыть форму
             WorkerForm workerForm = new WorkerForm(worker, Workers);
-
-            //если не уникальный - сообщить, вернуться в форму
-
-            //если уникальный - получить данные работника из формы
+            workerForm.Text = "Добавить нового работника";
+            workerForm.ShowDialog();
 
             //создать строку на добавление
+            richTextBox1.Text += $"{worker.Tn} {worker.Name}";
 
             //запрос на добавление
 

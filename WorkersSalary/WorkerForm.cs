@@ -23,12 +23,9 @@ namespace WorkersSalary
         {
             InitializeComponent();
             Workers = workers;
-            if (w != null)
-            {
-                worker = w;
-                TnTb.Text = worker.Tn.ToString();
-                NameTb.Text = worker.Name;
-            }
+            worker = w;
+            TnTb.Text = worker.Tn.ToString();
+            NameTb.Text = worker.Name;
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
@@ -61,12 +58,8 @@ namespace WorkersSalary
                         }
                     }
                 }
-                if (true)
-                {
-
-                }
-                //Изменить объект в списке на главной форме и закрыть активную форму
-                worker.Tn = int.Parse(TnTb.Text);
+                //Изменить (новый) объект в списке на главной форме и закрыть активную форму
+                worker.Tn = Tn;
                 worker.Name = NameTb.Text;
                 this.Close();
             }
