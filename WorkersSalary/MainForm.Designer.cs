@@ -138,6 +138,7 @@ namespace WorkersSalary
             this.dataGridWorkers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridWorkers.MultiSelect = false;
             this.dataGridWorkers.Name = "dataGridWorkers";
+            this.dataGridWorkers.ReadOnly = true;
             this.dataGridWorkers.RowHeadersWidth = 51;
             this.dataGridWorkers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridWorkers.RowTemplate.Height = 29;
@@ -221,6 +222,7 @@ namespace WorkersSalary
             this.dataGridSalaries.MinimumSize = new System.Drawing.Size(0, 180);
             this.dataGridSalaries.MultiSelect = false;
             this.dataGridSalaries.Name = "dataGridSalaries";
+            this.dataGridSalaries.ReadOnly = true;
             this.dataGridSalaries.RowHeadersWidth = 51;
             this.dataGridSalaries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridSalaries.RowTemplate.Height = 29;

@@ -22,8 +22,9 @@ namespace WorkersSalary
                 SqliteCommand command = new SqliteCommand();
                 Int64 number;
                 command.Connection = connection;
-
+                //Проверить существование таблицы Workers
                 command.CommandText = "SELECT COUNT(name) FROM sqlite_master WHERE type='table' and name = 'Workers'";
+                //Если табблица не существует, то создать
                 if ((Int64)command.ExecuteScalar() == 0)
                 {
                     command.CommandText = "CREATE TABLE IF NOT EXISTS Workers(" +
@@ -34,10 +35,11 @@ namespace WorkersSalary
                     number = command.ExecuteNonQuery();
                     richTextBox1.Text += $"Таблица Workers создана\n";
                 }
-
+                //Проверить наличие записей в таблице Workers
                 command.CommandText = "SELECT COUNT(*) FROM workers";
                 number = (Int64)command.ExecuteScalar();     //ExecuteScalar() возвращает объект, который не может быть приведён к Int32
                 richTextBox1.Text += $"Количество строк в Workers: {number}\n";
+                //Если их нет, то добавить
                 if (number == 0)
                 {
                     command.CommandText = "INSERT INTO workers(Tn, Name) " +
@@ -45,8 +47,9 @@ namespace WorkersSalary
                     number = command.ExecuteNonQuery();
                     richTextBox1.Text += $"Добавлено строк в Workers: {number}\n";
                 }
-
+                //Проверить существование таблицы Salary
                 command.CommandText = "SELECT COUNT(name) FROM sqlite_master WHERE type = 'table' AND name = 'Salary'";
+                //Если не существует, создать
                 if ((Int64)command.ExecuteScalar() == 0)
                 {
                     command.CommandText = "CREATE TABLE IF NOT EXISTS Salary(" +
@@ -62,7 +65,7 @@ namespace WorkersSalary
                     number = command.ExecuteNonQuery();
                     richTextBox1.Text += $"Таблица Salary создана\n";
                 }
-
+                //Если таблица пустая, добавить записи
                 command.CommandText = "SELECT COUNT(*) FROM Salary";
                 number = (Int64)command.ExecuteScalar();
                 richTextBox1.Text += $"Количество строк в Salary: {number}\n";
@@ -91,9 +94,8 @@ namespace WorkersSalary
                 dataGridSalaries.RowHeadersVisible = false;
             }
         }
-        //Salaries = GetSalaries(selectedWorker.Tn);
-        //dataGridSalaries.DataSource = Salaries;
-
+        
+        //Создание коллекции работников и заполнение таблицы
         private List<Worker> GetWorkers()
         {
             List<Worker> workers = new List<Worker>();
@@ -121,6 +123,7 @@ namespace WorkersSalary
             return workers;
         }
 
+        //Создание коллекции зарплат и заполнение таблицы
         private List<Salary> GetSalaries(int Tn)
         {
             List<Salary> Salaries = new List<Salary>();
@@ -150,11 +153,13 @@ namespace WorkersSalary
             return Salaries;
         }
 
+        //Убарть выделение строки после заполнения таблицы
         private void dataGridWorkers_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridWorkers.ClearSelection();
         }
 
+        //При выделении работника заполняется коллекция его зарплат и выводится в таблицу
         private void dataGridWorkers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int Tn = (int)((DataGridView)sender).SelectedRows[0].Cells["Tn"].Value;
@@ -164,27 +169,33 @@ namespace WorkersSalary
             dataGridSalaries.Columns["Id"].Visible = false;
         }
 
+        //Кнопка добавления данных нового работника
         private void addWorker_Click(object sender, EventArgs e)
         {
             Worker worker = new Worker();
             //открыть форму
             WorkerForm workerForm = new WorkerForm(worker, Workers);
-            workerForm.Text = "Добавить нового работника";
+            workerForm.Text = "Добавить данные нового работника";
             workerForm.ShowDialog();
 
-            //создать строку на добавление
-            richTextBox1.Text += $"{worker.Tn} {worker.Name}";
+            if (workerForm.DialogResult != DialogResult.Cancel)
+            {
+                //создать строку на добавление
+                string sql = $"INSERT INTO Workers (Tn, Name) VALUES ({worker.Tn}, {worker.Name})";
+                //запрос на добавление
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand(sql, connection);
+                    command.ExecuteNonQuery();
+                }
 
-            //запрос на добавление
 
-            //обновить коллекцию и таблицу, выделить добавленного работника
-
-
-            //WorkerForm newForm = new WorkerForm(this);
-            //newForm.Owner = this;
-            //newForm.ShowDialog();
+                //обновить коллекцию и таблицу, выделить добавленного работника
+            }
         }
 
+        //Кнопка изменения данных существующего рабтника
         private void changeWorker_Click(object sender, EventArgs e)
         {
             //извлечь данные выбранного работника, запомнить кто выбран,
@@ -200,40 +211,44 @@ namespace WorkersSalary
             //передать в форму
             WorkerForm workerForm = new WorkerForm(Workers[dataGridWorkers.CurrentRow.Index], Workers);
             workerForm.Text = "Изменить данные работника";
-            workerForm.ShowDialog();
+            //workerForm.ShowDialog();
 
-            //создать запрос на изменение
-            string sql = $"UPDATE workers SET " +
-                            $"Tn = '{Workers[dataGridWorkers.CurrentRow.Index].Tn}', " +
-                            $"Name = '{Workers[dataGridWorkers.CurrentRow.Index].Name}'" +
-                            $"WHERE _id = {Workers[dataGridWorkers.CurrentRow.Index].Id}";
-            using(SqliteConnection connection = new SqliteConnection(connectionString))
+            if (workerForm.ShowDialog() != DialogResult.Cancel)
             {
-                connection.Open();
-                SqliteCommand command = new SqliteCommand(sql, connection);
+                //создать запрос на изменение
+                string sql = $"UPDATE workers SET " +
+                                $"Tn = '{Workers[dataGridWorkers.CurrentRow.Index].Tn}', " +
+                                $"Name = '{Workers[dataGridWorkers.CurrentRow.Index].Name}'" +
+                                $"WHERE _id = {Workers[dataGridWorkers.CurrentRow.Index].Id}";
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand(sql, connection);
 
-                //запрос на изменение
-                command.ExecuteNonQuery();
+                    //запрос на изменение
+                    command.ExecuteNonQuery();
+                }
+
+                //обновить коллекцию и таблицу
+                Workers = GetWorkers();
+                dataGridWorkers.DataSource = Workers;
+
+                //выделить изменённую строку
+                int index = Workers.FindIndex(x => x.Id == workerId);
+                dataGridWorkers.Rows[index].Selected = true;
+                dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+                //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+
+                //Обновить колекцию и таблицу зарплат
+                int Tn = Workers[index].Tn;
+                Salaries = GetSalaries(Tn);
+                dataGridSalaries.DataSource = Salaries;
+                dataGridSalaries.RowHeadersVisible = false;
+                dataGridSalaries.Columns["Id"].Visible = false;
             }
-
-            //обновить коллекцию и таблицу
-            Workers = GetWorkers();
-            dataGridWorkers.DataSource = Workers;
-
-            //выделить изменённую строку
-            int index = Workers.FindIndex(x => x.Id == workerId);
-            dataGridWorkers.Rows[index].Selected = true;
-            dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
-            //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
-
-            //Обновить колекцию и таблицу зарплат
-            int Tn = Workers[index].Tn;
-            Salaries = GetSalaries(Tn);
-            dataGridSalaries.DataSource = Salaries;
-            dataGridSalaries.RowHeadersVisible = false;
-            dataGridSalaries.Columns["Id"].Visible = false;
         }
 
+        //Кнопка удаления данных сущетвующего работника
         private void deleteWorker_Click(object sender, EventArgs e)
         {
             //если не выбран - сообщить, вернуться

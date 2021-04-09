@@ -69,6 +69,7 @@ namespace WorkersSalary
             // CancelBtn
             // 
             this.CancelBtn.AutoSize = true;
+            this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelBtn.Location = new System.Drawing.Point(234, 132);
             this.CancelBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CancelBtn.Name = "CancelBtn";
