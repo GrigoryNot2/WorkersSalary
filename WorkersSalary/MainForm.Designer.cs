@@ -133,7 +133,7 @@ namespace WorkersSalary
             this.dataGridWorkers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridWorkers.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridWorkers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridWorkers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridWorkers.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridWorkers.Location = new System.Drawing.Point(0, 0);
             this.dataGridWorkers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridWorkers.MultiSelect = false;
@@ -143,7 +143,7 @@ namespace WorkersSalary
             this.dataGridWorkers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridWorkers.RowTemplate.Height = 29;
             this.dataGridWorkers.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridWorkers.Size = new System.Drawing.Size(509, 235);
+            this.dataGridWorkers.Size = new System.Drawing.Size(509, 198);
             this.dataGridWorkers.TabIndex = 2;
             this.dataGridWorkers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridWorkers_CellClick);
             this.dataGridWorkers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridWorkers_DataBindingComplete);
@@ -213,13 +213,15 @@ namespace WorkersSalary
             // 
             this.dataGridSalaries.AllowUserToResizeColumns = false;
             this.dataGridSalaries.AllowUserToResizeRows = false;
+            this.dataGridSalaries.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridSalaries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridSalaries.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridSalaries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSalaries.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridSalaries.Location = new System.Drawing.Point(0, 0);
             this.dataGridSalaries.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridSalaries.MinimumSize = new System.Drawing.Size(0, 180);
+            this.dataGridSalaries.MinimumSize = new System.Drawing.Size(0, 100);
             this.dataGridSalaries.MultiSelect = false;
             this.dataGridSalaries.Name = "dataGridSalaries";
             this.dataGridSalaries.ReadOnly = true;
@@ -227,7 +229,7 @@ namespace WorkersSalary
             this.dataGridSalaries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridSalaries.RowTemplate.Height = 29;
             this.dataGridSalaries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridSalaries.Size = new System.Drawing.Size(509, 243);
+            this.dataGridSalaries.Size = new System.Drawing.Size(509, 208);
             this.dataGridSalaries.TabIndex = 3;
             // 
             // MainForm

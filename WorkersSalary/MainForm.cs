@@ -20,7 +20,7 @@ namespace WorkersSalary
             {
                 connection.Open();
                 SqliteCommand command = new SqliteCommand();
-                Int64 number;
+                int number;
                 command.Connection = connection;
                 //Проверить существование таблицы Workers
                 command.CommandText = "SELECT COUNT(name) FROM sqlite_master WHERE type='table' and name = 'Workers'";
@@ -37,7 +37,7 @@ namespace WorkersSalary
                 }
                 //Проверить наличие записей в таблице Workers
                 command.CommandText = "SELECT COUNT(*) FROM workers";
-                number = (Int64)command.ExecuteScalar();     //ExecuteScalar() возвращает объект, который не может быть приведён к Int32
+                number = Convert.ToInt32(command.ExecuteScalar());     //ExecuteScalar() возвращает объект, который не может быть приведён к Int32
                 richTextBox1.Text += $"Количество строк в Workers: {number}\n";
                 //Если их нет, то добавить
                 if (number == 0)
@@ -67,7 +67,7 @@ namespace WorkersSalary
                 }
                 //Если таблица пустая, добавить записи
                 command.CommandText = "SELECT COUNT(*) FROM Salary";
-                number = (Int64)command.ExecuteScalar();
+                number = Convert.ToInt32(command.ExecuteScalar());
                 richTextBox1.Text += $"Количество строк в Salary: {number}\n";
                 if (number == 0)
                 {
@@ -190,7 +190,8 @@ namespace WorkersSalary
                     command.ExecuteNonQuery();
                     //Получить ид добавленного работника, чтобы потом его выделить в таблице
                     sql = "SELECT last_insert_rowid()";
-                    index = (Int32)command.ExecuteScalar();
+                    command.CommandText = sql;
+                    index = Convert.ToInt32(command.ExecuteScalar());
                 }
 
                 //обновить коллекцию и таблицу работников
