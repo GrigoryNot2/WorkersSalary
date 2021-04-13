@@ -182,6 +182,7 @@ namespace WorkersSalary
             this.deleteSalary.TabIndex = 2;
             this.deleteSalary.Text = "Удалить";
             this.deleteSalary.UseVisualStyleBackColor = true;
+            this.deleteSalary.Click += new System.EventHandler(this.deleteSalary_Click);
             // 
             // changeSalary
             // 
@@ -231,6 +232,7 @@ namespace WorkersSalary
             this.dataGridSalaries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridSalaries.Size = new System.Drawing.Size(509, 208);
             this.dataGridSalaries.TabIndex = 3;
+            this.dataGridSalaries.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridSalaries_DataBindingComplete);
             // 
             // MainForm
             // 

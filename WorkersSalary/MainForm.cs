@@ -153,10 +153,14 @@ namespace WorkersSalary
             return Salaries;
         }
 
-        //Убарть выделение строки после заполнения таблицы
+        //Очистить выделение строки после заполнения таблицы
         private void dataGridWorkers_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            dataGridWorkers.ClearSelection();
+           dataGridWorkers.ClearSelection();
+        }
+        private void dataGridSalaries_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridSalaries.ClearSelection();
         }
 
         //При выделении работника заполняется коллекция его зарплат и выводится в таблицу
@@ -233,7 +237,7 @@ namespace WorkersSalary
             if (workerForm.ShowDialog() != DialogResult.Cancel)
             {
                 //создать запрос на изменение
-                string sql = $"UPDATE workers SET " +
+                string sql = $"UPDATE Workers SET " +
                                 $"Tn = '{Workers[dataGridWorkers.CurrentRow.Index].Tn}', " +
                                 $"Name = '{Workers[dataGridWorkers.CurrentRow.Index].Name}'" +
                                 $"WHERE _id = {Workers[dataGridWorkers.CurrentRow.Index].Id}";
@@ -275,10 +279,10 @@ namespace WorkersSalary
                 return;
             }
 
-            //извлечь данные выбранного работника, запомнить предыдущего,
-            //или следующего, или никого
+            //Сохранить индекс для выделения записи после операции удаления
+            //предыдущий, следующий, или нет
             int index = -1;
-            if (dataGridWorkers.CurrentRow.Index - 1 >= 0)// && dataGridWorkers.CurrentRow.Index - 1 < dataGridWorkers.Rows.Count)
+            if (dataGridWorkers.CurrentRow.Index - 1 >= 0)
             {
                 index = dataGridWorkers.CurrentRow.Index - 1;
             }
@@ -288,7 +292,7 @@ namespace WorkersSalary
             }
 
             //создать запрос на удаление
-            string sql = $"DELETE FROM workers WHERE _id = '{Workers[dataGridWorkers.CurrentRow.Index].Id}'";
+            string sql = $"DELETE FROM Workers WHERE _id = '{Workers[dataGridWorkers.CurrentRow.Index].Id}'";
             using(SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -306,7 +310,6 @@ namespace WorkersSalary
             {
                 dataGridWorkers.Rows[index].Selected = true;
                 dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
-                richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
             }
 
             //Обновить колекцию и таблицу зарплат
@@ -319,6 +322,38 @@ namespace WorkersSalary
             else
             {
                 dataGridSalaries.DataSource = null;
+            }
+        }
+
+        private void deleteSalary_Click(object sender, EventArgs e)
+        {
+            //если не выбран - сообщить, вернуться
+            if (dataGridSalaries.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необхадимо выбрать запись", "Внимание!");
+                return;
+            }
+
+            //Сохранить индекс для выделения записи после операции удаления
+            //предыдущий, следующий, или нет
+            int index = -1;
+            if (dataGridSalaries.CurrentRow.Index - 1 >= 0)
+            {
+                index = dataGridSalaries.CurrentRow.Index - 1;
+            }
+            else if (dataGridSalaries.CurrentRow.Index + 1 < dataGridSalaries.Rows.Count)
+            {
+                index = dataGridSalaries.CurrentRow.Index;
+            }
+
+            //создать запрос на удаление
+            string sql = $"DELETE FROM Salary WHERE _id = '{Workers[dataGridWorkers.CurrentRow.Index].Id}'";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(sql, connection);
+                //запрос на удаление
+                command.ExecuteNonQuery();
             }
         }
     }
