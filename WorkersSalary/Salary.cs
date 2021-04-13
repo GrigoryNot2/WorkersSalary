@@ -13,11 +13,11 @@ namespace WorkersSalary
             Id = id;
             Tn = tn;
             Pay = salary;
-            Montn = month;
+            Month = month;
         }
         public int Id { get; private set; }
         public int Tn { get; private set; }
         public float Pay { get; private set; }
-        public int Montn { get; private set; }
+        public int Month { get; private set; }
     }
 }

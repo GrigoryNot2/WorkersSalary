@@ -14,10 +14,10 @@ namespace WorkersSalary
     {
         Worker worker;
         List<Worker> Workers;
-        public WorkerForm()
-        {
-            InitializeComponent();
-        }
+        //public WorkerForm()
+        //{
+        //    InitializeComponent();
+        //}
 
         public WorkerForm(Worker w, List<Worker> workers)
         {

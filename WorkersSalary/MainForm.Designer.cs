@@ -36,12 +36,14 @@ namespace WorkersSalary
             this.changeWorker = new System.Windows.Forms.Button();
             this.addWorker = new System.Windows.Forms.Button();
             this.dataGridWorkers = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
             this.SalariesPanel = new System.Windows.Forms.Panel();
             this.SalariesBtns = new System.Windows.Forms.Panel();
             this.deleteSalary = new System.Windows.Forms.Button();
             this.changeSalary = new System.Windows.Forms.Button();
             this.addSalary = new System.Windows.Forms.Button();
             this.dataGridSalaries = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             this.WorkersPanel.SuspendLayout();
             this.WorkersBtns.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).BeginInit();
@@ -65,6 +67,7 @@ namespace WorkersSalary
             // 
             this.WorkersPanel.Controls.Add(this.WorkersBtns);
             this.WorkersPanel.Controls.Add(this.dataGridWorkers);
+            this.WorkersPanel.Controls.Add(this.label1);
             this.WorkersPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.WorkersPanel.Location = new System.Drawing.Point(0, 0);
             this.WorkersPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -134,7 +137,7 @@ namespace WorkersSalary
             this.dataGridWorkers.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridWorkers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridWorkers.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridWorkers.Location = new System.Drawing.Point(0, 0);
+            this.dataGridWorkers.Location = new System.Drawing.Point(0, 27);
             this.dataGridWorkers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridWorkers.MultiSelect = false;
             this.dataGridWorkers.Name = "dataGridWorkers";
@@ -143,16 +146,30 @@ namespace WorkersSalary
             this.dataGridWorkers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridWorkers.RowTemplate.Height = 29;
             this.dataGridWorkers.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridWorkers.Size = new System.Drawing.Size(509, 198);
+            this.dataGridWorkers.Size = new System.Drawing.Size(509, 176);
             this.dataGridWorkers.TabIndex = 2;
             this.dataGridWorkers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridWorkers_CellClick);
             this.dataGridWorkers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridWorkers_DataBindingComplete);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(15);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
+            this.label1.Size = new System.Drawing.Size(159, 27);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Список сотрудников";
             // 
             // SalariesPanel
             // 
             this.SalariesPanel.AutoSize = true;
             this.SalariesPanel.Controls.Add(this.SalariesBtns);
             this.SalariesPanel.Controls.Add(this.dataGridSalaries);
+            this.SalariesPanel.Controls.Add(this.label2);
             this.SalariesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SalariesPanel.Location = new System.Drawing.Point(0, 235);
             this.SalariesPanel.Name = "SalariesPanel";
@@ -196,6 +213,7 @@ namespace WorkersSalary
             this.changeSalary.TabIndex = 1;
             this.changeSalary.Text = "Изменить";
             this.changeSalary.UseVisualStyleBackColor = true;
+            this.changeSalary.Click += new System.EventHandler(this.changeSalary_Click);
             // 
             // addSalary
             // 
@@ -220,7 +238,7 @@ namespace WorkersSalary
             this.dataGridSalaries.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridSalaries.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridSalaries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSalaries.Location = new System.Drawing.Point(0, 0);
+            this.dataGridSalaries.Location = new System.Drawing.Point(0, 27);
             this.dataGridSalaries.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridSalaries.MinimumSize = new System.Drawing.Size(0, 100);
             this.dataGridSalaries.MultiSelect = false;
@@ -230,9 +248,22 @@ namespace WorkersSalary
             this.dataGridSalaries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridSalaries.RowTemplate.Height = 29;
             this.dataGridSalaries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridSalaries.Size = new System.Drawing.Size(509, 208);
+            this.dataGridSalaries.Size = new System.Drawing.Size(509, 181);
             this.dataGridSalaries.TabIndex = 3;
             this.dataGridSalaries.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridSalaries_DataBindingComplete);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(15);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
+            this.label2.Size = new System.Drawing.Size(126, 27);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Список выплат";
             // 
             // MainForm
             // 
@@ -246,10 +277,12 @@ namespace WorkersSalary
             this.Name = "MainForm";
             this.Text = "Form1";
             this.WorkersPanel.ResumeLayout(false);
+            this.WorkersPanel.PerformLayout();
             this.WorkersBtns.ResumeLayout(false);
             this.WorkersBtns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWorkers)).EndInit();
             this.SalariesPanel.ResumeLayout(false);
+            this.SalariesPanel.PerformLayout();
             this.SalariesBtns.ResumeLayout(false);
             this.SalariesBtns.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSalaries)).EndInit();
@@ -273,6 +306,8 @@ namespace WorkersSalary
         private System.Windows.Forms.Button deleteSalary;
         private System.Windows.Forms.Button changeSalary;
         private System.Windows.Forms.Button addSalary;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
