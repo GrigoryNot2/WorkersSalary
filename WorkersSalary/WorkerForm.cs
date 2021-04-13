@@ -14,10 +14,10 @@ namespace WorkersSalary
     {
         Worker worker;
         List<Worker> Workers;
-        //public WorkerForm()
-        //{
-        //    InitializeComponent();
-        //}
+        public WorkerForm()
+        {
+            InitializeComponent();
+        }
 
         public WorkerForm(Worker w, List<Worker> workers)
         {
@@ -36,13 +36,13 @@ namespace WorkersSalary
             //Пустые поля
             if (TnTb.Text == "" || NameTb.Text=="")
             {
-                MessageBox.Show("Необходимо заполнить поля", "Внимание!");
+                MessageBox.Show("Необходимо заполнить все поля", "Внимание!");
                 return;
             }
             //если данные не изменились - сообщить, вернуться
             if (TnTb.Text == worker.Tn.ToString() && NameTb.Text == worker.Name)
             {
-                MessageBox.Show("Необходимо изменить данные работника", "Внимание!");
+                MessageBox.Show("Необходимо изменить данные сотрудника", "Внимание!");
                 return;
             }
             else

@@ -93,9 +93,9 @@ namespace WorkersSalary
             this.NameLbl.AutoSize = true;
             this.NameLbl.Location = new System.Drawing.Point(10, 65);
             this.NameLbl.Name = "NameLbl";
-            this.NameLbl.Size = new System.Drawing.Size(95, 15);
+            this.NameLbl.Size = new System.Drawing.Size(34, 15);
             this.NameLbl.TabIndex = 5;
-            this.NameLbl.Text = "Имя работника:";
+            this.NameLbl.Text = "Имя:";
             // 
             // WorkerForm
             // 
@@ -109,6 +109,7 @@ namespace WorkersSalary
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.NameTb);
             this.Controls.Add(this.TnTb);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

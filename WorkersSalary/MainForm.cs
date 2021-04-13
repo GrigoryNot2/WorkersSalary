@@ -183,7 +183,7 @@ namespace WorkersSalary
             int index;
             //открыть форму
             WorkerForm workerForm = new WorkerForm(worker, Workers);
-            workerForm.Text = "Добавить данные нового работника";
+            workerForm.Text = "Добавить данные нового сотрудника";
 
             if (workerForm.ShowDialog() != DialogResult.Cancel)
             {
@@ -227,7 +227,7 @@ namespace WorkersSalary
             //если не выбран - сообщить, вернуться
             if (dataGridWorkers.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Необхадимо выбрать работника", "Внимание!");
+                MessageBox.Show("Необходимо выбрать сотрудника из списка", "Внимание!");
                 return;
             }
 
@@ -235,7 +235,7 @@ namespace WorkersSalary
 
             //передать в форму
             WorkerForm workerForm = new WorkerForm(Workers[dataGridWorkers.CurrentRow.Index], Workers);
-            workerForm.Text = "Изменить данные работника";
+            workerForm.Text = "Изменить данные сотрудника";
 
             if (workerForm.ShowDialog() != DialogResult.Cancel)
             {
@@ -278,7 +278,7 @@ namespace WorkersSalary
             //если не выбран - сообщить, вернуться
             if (dataGridWorkers.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Необхадимо выбрать работника", "Внимание!");
+                MessageBox.Show("Необходимо выбрать сотрудника из списка", "Внимание!");
                 return;
             }
 
@@ -333,7 +333,7 @@ namespace WorkersSalary
             //если не выбран - сообщить, вернуться
             if (dataGridSalaries.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Необхадимо выбрать запись", "Внимание!");
+                MessageBox.Show("Необходимо выбрать запись из списка выплат", "Внимание!");
                 return;
             }
 
@@ -384,7 +384,7 @@ namespace WorkersSalary
             //если не выбрано - сообщить, вернуться
             if (dataGridSalaries.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Необхадимо выбрать запись о выплате", "Внимание!");
+                MessageBox.Show("Необходимо выбрать запись из списка выплат", "Внимание!");
                 return;
             }
 
