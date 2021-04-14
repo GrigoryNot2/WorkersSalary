@@ -12,13 +12,19 @@ namespace WorkersSalary
 {
     public partial class SalaryForm : Form
     {
+        Salary salary;
+        List<Salary> Salaries;
+
         public SalaryForm()
         {
             InitializeComponent();
         }
 
-        public SalaryForm(Salary salary, List<Salary> salaries, int Tn)
+        public SalaryForm(Salary s, List<Salary> salaries, int Tn)
         {
+            InitializeComponent();
+            Salaries = salaries;
+            salary = s;
 
         }
     }

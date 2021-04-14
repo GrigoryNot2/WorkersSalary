@@ -258,7 +258,7 @@ namespace WorkersSalary
                 dataGridWorkers.DataSource = Workers;
 
                 //выделить изменённую строку
-                int index = Workers.FindIndex(x => x.Id == workerId);
+                int index = Workers.FindIndex(x => x.Id == workerId);   //поиск индекса в коллекции для элемента с нужным Ид
                 dataGridWorkers.Rows[index].Selected = true;
                 dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
                 //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";

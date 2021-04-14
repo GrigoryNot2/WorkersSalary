@@ -14,6 +14,7 @@ namespace WorkersSalary
     {
         Worker worker;
         List<Worker> Workers;
+
         public WorkerForm()
         {
             InitializeComponent();
@@ -47,6 +48,19 @@ namespace WorkersSalary
             }
             else
             {
+                //bool IsNotNumberContains(string input)
+                //{
+                //    foreach (char c in input)
+                //        if (!Char.IsNumber(c))
+                //            return true;
+                //    return false;
+                //}
+                //if (IsNotNumberContains(TnTb.Text))
+                if ()
+                {
+                    MessageBox.Show("Табельный номер может состоять только из чисел", "Внимание!");
+                    return;
+                }
                 //проверить уникальность тн работника
                 //если не уникальный - сообщить, вернуться
                 int Tn = int.Parse(TnTb.Text);
