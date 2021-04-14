@@ -9,9 +9,9 @@ namespace WorkersSalary
 {
     public partial class MainForm : Form
     {
-        private static List<Salary> Salaries;
         static string connectionString = "data source = workerssalary.db";
-        private static List<Worker> Workers;
+        private static List<Salary> Salaries;   //Коллекция для спика выплат
+        private static List<Worker> Workers;    //Коллекция для списка сотрудников
         public MainForm()
         {
             InitializeComponent();
@@ -282,49 +282,58 @@ namespace WorkersSalary
                 return;
             }
 
-            //Сохранить индекс для выделения записи после операции удаления
-            //предыдущий, следующий, или нет
-            int index = -1;
-            if (dataGridWorkers.CurrentRow.Index - 1 >= 0)
+            if (MessageBox.Show(
+                "Данную операцию невозможно отменить. Информация о сотруднике и истории его заработка будет уничтожена. " +
+                "Продолжить выполнение?",
+                "Внимание!",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes
+                )
             {
-                index = dataGridWorkers.CurrentRow.Index - 1;
-            }
-            else if (dataGridWorkers.CurrentRow.Index + 1 < dataGridWorkers.Rows.Count)
-            {
-                index = dataGridWorkers.CurrentRow.Index;
-            }
+                //Сохранить индекс для выделения записи после операции удаления
+                //предыдущий, следующий, или нет
+                int index = -1;
+                if (dataGridWorkers.CurrentRow.Index - 1 >= 0)
+                {
+                    index = dataGridWorkers.CurrentRow.Index - 1;
+                }
+                else if (dataGridWorkers.CurrentRow.Index + 1 < dataGridWorkers.Rows.Count)
+                {
+                    index = dataGridWorkers.CurrentRow.Index;
+                }
 
-            //создать запрос на удаление
-            string sql = $"DELETE FROM Workers WHERE _id = '{Workers[dataGridWorkers.CurrentRow.Index].Id}'";
-            using(SqliteConnection connection = new SqliteConnection(connectionString))
-            {
-                connection.Open();
-                SqliteCommand command = new SqliteCommand(sql, connection);
-                //запрос на удаление
-                command.ExecuteNonQuery();
-            }
+                //создать запрос на удаление
+                string sql = $"DELETE FROM Workers WHERE _id = '{Workers[dataGridWorkers.CurrentRow.Index].Id}'";
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand(sql, connection);
+                    //запрос на удаление
+                    command.ExecuteNonQuery();
+                }
 
-            //обновить коллекцию и таблицу работников
-            Workers = GetWorkers();
-            dataGridWorkers.DataSource = Workers;
+                //обновить коллекцию и таблицу работников
+                Workers = GetWorkers();
+                dataGridWorkers.DataSource = Workers;
 
-            //выделить сохранённого работника, если есть
-            if (index > -1)
-            {
-                dataGridWorkers.Rows[index].Selected = true;
-                dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
-            }
+                //выделить сохранённого работника, если есть
+                if (index > -1)
+                {
+                    dataGridWorkers.Rows[index].Selected = true;
+                    dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+                }
 
-            //Обновить колекцию и таблицу зарплат
-            if (index  >= 0)
-            {
-                int Tn = Workers[index].Tn;
-                Salaries = GetSalaries(Tn);
-                dataGridSalaries.DataSource = Salaries;
-            }
-            else
-            {
-                dataGridSalaries.DataSource = null;
+                //Обновить колекцию и таблицу зарплат
+                if (index >= 0)
+                {
+                    int Tn = Workers[index].Tn;
+                    Salaries = GetSalaries(Tn);
+                    dataGridSalaries.DataSource = Salaries;
+                }
+                else
+                {
+                    dataGridSalaries.DataSource = null;
+                }
             }
         }
 
@@ -337,44 +346,52 @@ namespace WorkersSalary
                 return;
             }
 
-            //Сохранить индекс для выделения записи после операции удаления
-            //предыдущий, следующий, или нет
-            int index = -1;
-            if (dataGridSalaries.CurrentRow.Index - 1 >= 0)
+            if (MessageBox.Show("Данную операцию невозможно отменить. " +
+                "Запись о выплате будет уничтожена. Продолжить выполнение операциии?",
+                "Внимание!",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes
+                )
             {
-                index = dataGridSalaries.CurrentRow.Index - 1;
-            }
-            else if (dataGridSalaries.CurrentRow.Index + 1 < dataGridSalaries.Rows.Count)
-            {
-                index = dataGridSalaries.CurrentRow.Index;
-            }
-
-
-            //создать запрос на удаление
-            string sql = $"DELETE FROM Salary WHERE _id = '{Salaries[dataGridSalaries.CurrentRow.Index].Id}'";
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
-            {
-                connection.Open();
-                SqliteCommand command = new SqliteCommand(sql, connection);
-                //запрос на удаление
-                command.ExecuteNonQuery();
-            }
-
-            if (dataGridWorkers.SelectedRows.Count > 0)
-            {
-                Salaries = GetSalaries(Convert.ToInt32(dataGridWorkers.CurrentRow.Cells["Tn"].Value));
-                dataGridSalaries.DataSource = Salaries;
-
-                //выделить сохранённую запись, если есть
-                if (index > -1)
+                //Сохранить индекс для выделения записи после операции удаления
+                //предыдущий, следующий, или нет
+                int index = -1;
+                if (dataGridSalaries.CurrentRow.Index - 1 >= 0)
                 {
-                    dataGridSalaries.Rows[index].Selected = true;
-                    dataGridSalaries.CurrentCell = dataGridSalaries.SelectedRows[0].Cells[1];
+                    index = dataGridSalaries.CurrentRow.Index - 1;
                 }
-            }
-            else
-            {
-                dataGridSalaries.DataSource = null;
+                else if (dataGridSalaries.CurrentRow.Index + 1 < dataGridSalaries.Rows.Count)
+                {
+                    index = dataGridSalaries.CurrentRow.Index;
+                }
+
+
+                //создать запрос на удаление
+                string sql = $"DELETE FROM Salary WHERE _id = '{Salaries[dataGridSalaries.CurrentRow.Index].Id}'";
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand(sql, connection);
+                    //запрос на удаление
+                    command.ExecuteNonQuery();
+                }
+
+                if (dataGridWorkers.SelectedRows.Count > 0)
+                {
+                    Salaries = GetSalaries(Convert.ToInt32(dataGridWorkers.CurrentRow.Cells["Tn"].Value));
+                    dataGridSalaries.DataSource = Salaries;
+
+                    //выделить сохранённую запись, если есть
+                    if (index > -1)
+                    {
+                        dataGridSalaries.Rows[index].Selected = true;
+                        dataGridSalaries.CurrentCell = dataGridSalaries.SelectedRows[0].Cells[1];
+                    }
+                }
+                else
+                {
+                    dataGridSalaries.DataSource = null;
+                }
             }
         }
 

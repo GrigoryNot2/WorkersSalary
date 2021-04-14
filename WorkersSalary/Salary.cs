@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace WorkersSalary
 {
-    class Salary
+    public class Salary
     {
+        public Salary() { }
         public Salary(int id, int tn, float salary, int month)
         {
             Id = id;

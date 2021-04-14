@@ -16,5 +16,10 @@ namespace WorkersSalary
         {
             InitializeComponent();
         }
+
+        public SalaryForm(Salary salary, List<Salary> salaries, int Tn)
+        {
+
+        }
     }
 }
