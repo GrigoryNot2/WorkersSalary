@@ -35,7 +35,7 @@ namespace WorkersSalary
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             //Пустые поля
-            if (TnTb.Text == "" || NameTb.Text=="")
+            if (TnTb.Text == "" || NameTb.Text == "")
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание!");
                 return;
@@ -46,41 +46,48 @@ namespace WorkersSalary
                 MessageBox.Show("Необходимо изменить данные сотрудника", "Внимание!");
                 return;
             }
-            else
+
+            //локальная функция, вернёт true, если в строке не только числа
+            bool IsNotNumberContains(string input)
             {
-                //bool IsNotNumberContains(string input)
-                //{
-                //    foreach (char c in input)
-                //        if (!Char.IsNumber(c))
-                //            return true;
-                //    return false;
-                //}
-                //if (IsNotNumberContains(TnTb.Text))
-                if ()
+                foreach (char c in input)
+                    if (!Char.IsNumber(c))
+                        return true;
+                return false;
+            }
+
+            if (IsNotNumberContains(TnTb.Text))
+            {
+                MessageBox.Show("Табельный номер может состоять только из чисел", "Внимание!");
+                return;
+            }
+
+            //проверить уникальность тн работника
+            //если не уникальный - сообщить, вернуться
+            int Tn = int.Parse(TnTb.Text);
+
+            if (Tn < 1)
+            {
+                MessageBox.Show("Табельный номер не должен быть меньше 1", "Внимание!");
+                return;
+            }
+
+            if (Tn != worker.Tn)
+            {
+                foreach (var worker in Workers)
                 {
-                    MessageBox.Show("Табельный номер может состоять только из чисел", "Внимание!");
-                    return;
-                }
-                //проверить уникальность тн работника
-                //если не уникальный - сообщить, вернуться
-                int Tn = int.Parse(TnTb.Text);
-                if (Tn != worker.Tn)
-                {
-                    foreach (var worker in Workers)
+                    if (worker.Tn == Tn)
                     {
-                        if (worker.Tn == Tn)
-                        {
-                            MessageBox.Show("Такой табельный номер уже используется", "Внимание!");
-                            return;
-                        }
+                        MessageBox.Show("Такой табельный номер уже используется", "Внимание!");
+                        return;
                     }
                 }
-                //Изменить (новый) объект в списке на главной форме и закрыть активную форму
-                worker.Tn = Tn;
-                worker.Name = NameTb.Text;
-                this.DialogResult = DialogResult.OK;
-                this.Close();
             }
+            //Изменить (новый) объект в списке на главной форме и закрыть активную форму
+            worker.Tn = Tn;
+            worker.Name = NameTb.Text;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

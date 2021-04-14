@@ -347,7 +347,7 @@ namespace WorkersSalary
             }
 
             if (MessageBox.Show("Данную операцию невозможно отменить. " +
-                "Запись о выплате будет уничтожена. Продолжить выполнение операциии?",
+                "Запись о выплате будет уничтожена. Продолжить выполнение?",
                 "Внимание!",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes
@@ -397,6 +397,11 @@ namespace WorkersSalary
 
         private void changeSalary_Click(object sender, EventArgs e)
         {
+            if (dataGridWorkers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необходимо выбрать сотрудника", "Внимание!");
+                return;
+            }
             //извлечь данные выбранной записи, запомнить что выбрано,
             //если не выбрано - сообщить, вернуться
             if (dataGridSalaries.SelectedRows.Count == 0)
@@ -405,7 +410,14 @@ namespace WorkersSalary
                 return;
             }
 
-            int salaryId = Salaries[dataGridSalaries.CurrentRow.Index].Id;
+            int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);
+            int salaryId = Salaries[dataGridSalaries.CurrentRow.Index].Id; //ид - из-за сортировки по месяцу в запросе, индекс в колекции может измениться 
+
+            SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index],
+                                                 Salaries,
+                                                 Tn);
+
+
 
             ////передать в форму
             //SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index], Salaries);
