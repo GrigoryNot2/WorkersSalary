@@ -20,12 +20,13 @@ namespace WorkersSalary
             InitializeComponent();
         }
 
-        public SalaryForm(Salary s, List<Salary> salaries, int Tn)
+        public SalaryForm(Salary s, List<Salary> salaries)
         {
             InitializeComponent();
             Salaries = salaries;
             salary = s;
 
+            
         }
     }
 }

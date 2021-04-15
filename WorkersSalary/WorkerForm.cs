@@ -47,6 +47,7 @@ namespace WorkersSalary
                 return;
             }
 
+            //проверка табельного номера перед конвертацией в число
             //локальная функция, вернёт true, если в строке не только числа
             bool IsNotNumberContains(string input)
             {
@@ -62,8 +63,6 @@ namespace WorkersSalary
                 return;
             }
 
-            //проверить уникальность тн работника
-            //если не уникальный - сообщить, вернуться
             int Tn = int.Parse(TnTb.Text);
 
             if (Tn < 1)
@@ -72,6 +71,8 @@ namespace WorkersSalary
                 return;
             }
 
+            //проверить уникальность тн работника
+            //если не уникальный - сообщить, вернуться
             if (Tn != worker.Tn)
             {
                 foreach (var worker in Workers)

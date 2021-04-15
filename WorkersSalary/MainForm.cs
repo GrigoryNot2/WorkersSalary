@@ -410,13 +410,12 @@ namespace WorkersSalary
                 return;
             }
 
-            int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);
+            int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);//табельный номер сотрудника
             int salaryId = Salaries[dataGridSalaries.CurrentRow.Index].Id; //ид - из-за сортировки по месяцу в запросе, индекс в колекции может измениться 
 
-            SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index],
-                                                 Salaries,
-                                                 Tn);
-
+            SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index], Salaries);
+            salaryForm.Text = "Изменить запись о зарплате";
+            salaryForm.ShowDialog();
 
 
             ////передать в форму
