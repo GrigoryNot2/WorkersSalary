@@ -26,7 +26,10 @@ namespace WorkersSalary
             Salaries = salaries;
             salary = s;
 
-            
+            AmountTb.Text = salary.Pay.ToString();
+            MonthTb.Text = salary.Month.ToString();
         }
+
+
     }
 }

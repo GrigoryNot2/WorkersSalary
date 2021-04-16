@@ -410,7 +410,7 @@ namespace WorkersSalary
                 return;
             }
 
-            int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);//табельный номер сотрудника
+            int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);//табельный номер выбранного сотрудника
             int salaryId = Salaries[dataGridSalaries.CurrentRow.Index].Id; //ид - из-за сортировки по месяцу в запросе, индекс в колекции может измениться 
 
             SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index], Salaries);
