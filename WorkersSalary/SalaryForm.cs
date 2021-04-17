@@ -20,19 +20,25 @@ namespace WorkersSalary
             InitializeComponent();
         }
 
-        public SalaryForm(Salary s, List<Salary> salaries)
+        public SalaryForm(Salary s)
         {
             InitializeComponent();
-            Salaries = salaries;
             salary = s;
 
-            AmountTb.Text = salary.Pay.ToString();
-            MonthTb.Text = salary.Month.ToString();
+            if (salary.Pay != 0)
+            {
+                AmountTb.Text = salary.Pay.ToString();
+            }
+
+            if (salary.Month != 0)
+            {
+                MonthTb.Text = salary.Month.ToString();
+            }
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            AmountTb.Text = AmountTb.Text.Replace('.', ',');
+            AmountTb.Text = AmountTb.Text.Replace('.', ',');    //если пользователь неправильно ввёл десятичный разделитель
 
             float s;
 
@@ -57,6 +63,7 @@ namespace WorkersSalary
                 MessageBox.Show("Месяц должен быть целым числом от 1 до 12", "Внимание!");
                 return;
             }
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

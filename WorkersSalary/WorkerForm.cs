@@ -40,7 +40,7 @@ namespace WorkersSalary
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание!");
                 return;
             }
-            //Проверка - целое положительное число
+            //Проверка табельного номера - целое положительное число
             int Tn;
 
             if (!int.TryParse(TnTb.Text, out Tn) || Tn < 1 )
@@ -62,6 +62,7 @@ namespace WorkersSalary
                     }
                 }
             }
+
             //Изменить (новый) объект в списке на главной форме и закрыть активную форму
             worker.Tn = Tn;
             worker.Name = NameTb.Text;
