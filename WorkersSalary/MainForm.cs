@@ -417,12 +417,20 @@ namespace WorkersSalary
             salaryForm.Text = "Изменить запись о зарплате";
             if (salaryForm.ShowDialog() == DialogResult.OK)
             {
+
+                //запрос на изменение данных
                 string sql = $"UPDATE Salary SET" +
-                                $""
+                                $"Salary = {Salaries[dataGridSalaries.CurrentRow.Index].Pay}, " +
+                                $"Month = {Salaries[dataGridSalaries.CurrentRow.Index].Month} " +
+                                $"Where _id = {Salaries[dataGridSalaries.CurrentRow.Index].Id}";
                 using(SqliteConnection connection = new SqliteConnection(connectionString))
                 {
-
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand(sql, connection);
+                    command.ExecuteNonQuery();
                 }
+
+
             }
 
 
