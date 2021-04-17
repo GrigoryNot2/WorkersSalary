@@ -16,9 +16,9 @@ namespace WorkersSalary
             Pay = salary;
             Month = month;
         }
-        public int Id { get; private set; }
-        public int Tn { get; private set; }
-        public float Pay { get; private set; }
-        public int Month { get; private set; }
+        public int Id { get; set; }
+        public int Tn { get; set; }
+        public float Pay { get; set; }
+        public int Month { get; set; }
     }
 }

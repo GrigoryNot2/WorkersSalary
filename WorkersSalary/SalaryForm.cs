@@ -30,6 +30,35 @@ namespace WorkersSalary
             MonthTb.Text = salary.Month.ToString();
         }
 
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            AmountTb.Text = AmountTb.Text.Replace('.', ',');
 
+            float s;
+
+            if (float.TryParse(AmountTb.Text, out s) & s >= 0)
+            {
+                salary.Pay = s;
+            }
+            else
+            {
+                MessageBox.Show("Сумма введена не корректно", "Внимание!");
+                return;
+            }
+
+            int m;
+
+            if(int.TryParse(MonthTb.Text, out m) & m >= 1 & m <= 12)
+            {
+                salary.Month = m;
+            }
+            else
+            {
+                MessageBox.Show("Месяц должен быть целым числом от 1 до 12", "Внимание!");
+                return;
+            }
+
+
+        }
     }
 }

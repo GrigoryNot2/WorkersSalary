@@ -79,6 +79,7 @@ namespace WorkersSalary
             this.SaveBtn.TabIndex = 8;
             this.SaveBtn.Text = "Сохранить";
             this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // MonthTb
             // 
@@ -107,6 +108,7 @@ namespace WorkersSalary
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.MonthTb);
             this.Controls.Add(this.AmountTb);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SalaryForm";
             this.Text = "SalaryForm";

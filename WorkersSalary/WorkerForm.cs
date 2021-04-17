@@ -34,18 +34,18 @@ namespace WorkersSalary
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            //Пустые поля
+            //Проверка - пустые поля
             if (TnTb.Text == "" || NameTb.Text == "")
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание!");
                 return;
             }
-            //если данные не изменились - сообщить, вернуться
-            if (TnTb.Text == worker.Tn.ToString() && NameTb.Text == worker.Name)
-            {
-                MessageBox.Show("Необходимо изменить данные сотрудника", "Внимание!");
-                return;
-            }
+            ////если данные не изменились - сообщить, вернуться
+            //if (TnTb.Text == worker.Tn.ToString() && NameTb.Text == worker.Name)
+            //{
+            //    MessageBox.Show("Необходимо изменить данные сотрудника", "Внимание!");
+            //    return;
+            //}
 
             //проверка табельного номера перед конвертацией в число
             //локальная функция, вернёт true, если в строке не только числа
