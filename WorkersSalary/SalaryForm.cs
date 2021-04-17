@@ -57,8 +57,8 @@ namespace WorkersSalary
                 MessageBox.Show("Месяц должен быть целым числом от 1 до 12", "Внимание!");
                 return;
             }
-
-
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

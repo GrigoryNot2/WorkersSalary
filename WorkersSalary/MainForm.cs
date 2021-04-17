@@ -185,7 +185,7 @@ namespace WorkersSalary
             WorkerForm workerForm = new WorkerForm(worker, Workers);
             workerForm.Text = "Добавить данные нового сотрудника";
 
-            if (workerForm.ShowDialog() != DialogResult.Cancel)
+            if (workerForm.ShowDialog() == DialogResult.OK)
             {
                 //создать запрос на добавление
                 string sql = $"INSERT INTO Workers (Tn, Name) VALUES ({worker.Tn}, '{worker.Name}')";
@@ -237,7 +237,7 @@ namespace WorkersSalary
             WorkerForm workerForm = new WorkerForm(Workers[dataGridWorkers.CurrentRow.Index], Workers);
             workerForm.Text = "Изменить данные сотрудника";
 
-            if (workerForm.ShowDialog() != DialogResult.Cancel)
+            if (workerForm.ShowDialog() == DialogResult.OK)
             {
                 //создать запрос на изменение
                 string sql = $"UPDATE Workers SET " +
@@ -415,7 +415,15 @@ namespace WorkersSalary
 
             SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index], Salaries);
             salaryForm.Text = "Изменить запись о зарплате";
-            salaryForm.ShowDialog();
+            if (salaryForm.ShowDialog() == DialogResult.OK)
+            {
+                string sql = $"UPDATE Salary SET" +
+                                $""
+                using(SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+
+                }
+            }
 
 
             ////передать в форму

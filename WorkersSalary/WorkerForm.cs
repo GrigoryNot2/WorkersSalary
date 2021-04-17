@@ -40,34 +40,12 @@ namespace WorkersSalary
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание!");
                 return;
             }
-            ////если данные не изменились - сообщить, вернуться
-            //if (TnTb.Text == worker.Tn.ToString() && NameTb.Text == worker.Name)
-            //{
-            //    MessageBox.Show("Необходимо изменить данные сотрудника", "Внимание!");
-            //    return;
-            //}
+            //Проверка - целое положительное число
+            int Tn;
 
-            //проверка табельного номера перед конвертацией в число
-            //локальная функция, вернёт true, если в строке не только числа
-            bool IsNotNumberContains(string input)
+            if (!int.TryParse(TnTb.Text, out Tn) || Tn < 1 )
             {
-                foreach (char c in input)
-                    if (!Char.IsNumber(c))
-                        return true;
-                return false;
-            }
-
-            if (IsNotNumberContains(TnTb.Text))
-            {
-                MessageBox.Show("Табельный номер может состоять только из чисел", "Внимание!");
-                return;
-            }
-
-            int Tn = int.Parse(TnTb.Text);
-
-            if (Tn < 1)
-            {
-                MessageBox.Show("Табельный номер не должен быть меньше 1", "Внимание!");
+                MessageBox.Show("Табельный номер должен быть целым числом больше 0", "Внимание!");
                 return;
             }
 
