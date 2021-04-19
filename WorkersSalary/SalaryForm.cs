@@ -14,6 +14,7 @@ namespace WorkersSalary
     {
         Salary salary;
         List<Salary> Salaries;
+        string[] months = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
 
         public SalaryForm()
         {
@@ -24,6 +25,7 @@ namespace WorkersSalary
         {
             InitializeComponent();
             salary = s;
+            monthComboBox.DataSource = months;
 
             if (salary.Pay != 0)
             {
@@ -32,7 +34,8 @@ namespace WorkersSalary
 
             if (salary.Month != 0)
             {
-                MonthTb.Text = salary.Month.ToString();
+                //MonthTb.Text = salary.Month.ToString();
+                monthComboBox.SelectedItem = months[salary.Month];
             }
         }
 
@@ -52,17 +55,19 @@ namespace WorkersSalary
                 return;
             }
 
-            int m;
+            salary.Month = monthComboBox.SelectedIndex;
 
-            if(int.TryParse(MonthTb.Text, out m) & m >= 1 & m <= 12)
-            {
-                salary.Month = m;
-            }
-            else
-            {
-                MessageBox.Show("Месяц должен быть целым числом от 1 до 12", "Внимание!");
-                return;
-            }
+            //int m;
+
+            //if(int.TryParse(MonthTb.Text, out m) & m >= 1 & m <= 12)
+            //{
+            //    salary.Month = m;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Месяц должен быть целым числом от 1 до 12", "Внимание!");
+            //    return;
+            //}
 
             this.DialogResult = DialogResult.OK;
             this.Close();

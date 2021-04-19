@@ -33,8 +33,9 @@ namespace WorkersSalary
             this.AmountLbl = new System.Windows.Forms.Label();
             this.CancelBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
-            this.MonthTb = new System.Windows.Forms.TextBox();
+            //this.MonthTb = new System.Windows.Forms.TextBox();
             this.AmountTb = new System.Windows.Forms.TextBox();
+            this.monthComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // MonthLbl
@@ -83,11 +84,11 @@ namespace WorkersSalary
             // 
             // MonthTb
             // 
-            this.MonthTb.Location = new System.Drawing.Point(10, 79);
-            this.MonthTb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MonthTb.Name = "MonthTb";
-            this.MonthTb.Size = new System.Drawing.Size(307, 23);
-            this.MonthTb.TabIndex = 7;
+            //this.MonthTb.Location = new System.Drawing.Point(10, 79);
+            //this.MonthTb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            //this.MonthTb.Name = "MonthTb";
+            //this.MonthTb.Size = new System.Drawing.Size(307, 23);
+            //this.MonthTb.TabIndex = 7;
             // 
             // AmountTb
             // 
@@ -97,16 +98,27 @@ namespace WorkersSalary
             this.AmountTb.Size = new System.Drawing.Size(307, 23);
             this.AmountTb.TabIndex = 6;
             // 
+            // monthComboBox
+            // 
+            this.monthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.monthComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.monthComboBox.FormattingEnabled = true;
+            this.monthComboBox.Location = new System.Drawing.Point(10, 79);
+            this.monthComboBox.Name = "monthComboBox";
+            this.monthComboBox.Size = new System.Drawing.Size(307, 23);
+            this.monthComboBox.TabIndex = 12;
+            // 
             // SalaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(327, 164);
+            this.Controls.Add(this.monthComboBox);
             this.Controls.Add(this.MonthLbl);
             this.Controls.Add(this.AmountLbl);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.SaveBtn);
-            this.Controls.Add(this.MonthTb);
+            //this.Controls.Add(this.MonthTb);
             this.Controls.Add(this.AmountTb);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -123,7 +135,8 @@ namespace WorkersSalary
         private System.Windows.Forms.Label AmountLbl;
         private System.Windows.Forms.Button CancelBtn;
         private System.Windows.Forms.Button SaveBtn;
-        private System.Windows.Forms.TextBox MonthTb;
+        //private System.Windows.Forms.TextBox MonthTb;
         private System.Windows.Forms.TextBox AmountTb;
+        private System.Windows.Forms.ComboBox monthComboBox;
     }
 }
