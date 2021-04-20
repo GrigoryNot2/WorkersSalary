@@ -9,7 +9,7 @@ namespace WorkersSalary
     public class Salary
     {
         public Salary() { }
-        public Salary(int id, int tn, float salary, int month)
+        public Salary(int id, int tn, float salary, string month)
         {
             Id = id;
             Tn = tn;
@@ -19,6 +19,6 @@ namespace WorkersSalary
         public int Id { get; set; }
         public int Tn { get; set; }
         public float Pay { get; set; }
-        public int Month { get; set; }
+        public string Month { get; set; }
     }
 }

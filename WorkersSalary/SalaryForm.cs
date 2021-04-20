@@ -32,10 +32,10 @@ namespace WorkersSalary
                 AmountTb.Text = salary.Pay.ToString();
             }
 
-            if (salary.Month != 0)
+            if (salary.Month != "")
             {
                 //MonthTb.Text = salary.Month.ToString();
-                monthComboBox.SelectedItem = months[salary.Month];
+                monthComboBox.SelectedItem = salary.Month;
             }
         }
 
@@ -55,19 +55,7 @@ namespace WorkersSalary
                 return;
             }
 
-            salary.Month = monthComboBox.SelectedIndex;
-
-            //int m;
-
-            //if(int.TryParse(MonthTb.Text, out m) & m >= 1 & m <= 12)
-            //{
-            //    salary.Month = m;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Месяц должен быть целым числом от 1 до 12", "Внимание!");
-            //    return;
-            //}
+            salary.Month = Convert.ToString(monthComboBox.SelectedItem);
 
             this.DialogResult = DialogResult.OK;
             this.Close();

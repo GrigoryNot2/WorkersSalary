@@ -12,6 +12,8 @@ namespace WorkersSalary
         static string connectionString = "data source = workerssalary.db";
         private static List<Salary> Salaries;   //Коллекция для спика выплат
         private static List<Worker> Workers;    //Коллекция для списка сотрудников
+        string[] months = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+
         public MainForm()
         {
             InitializeComponent();
@@ -84,10 +86,10 @@ namespace WorkersSalary
                 dataGridWorkers.DataSource = Workers;
                 dataGridWorkers.Columns["Id"].Visible = false;
                 dataGridWorkers.RowHeadersVisible = false;
-                dataGridWorkers.Columns["Tn"].AutoSizeMode =
-                    DataGridViewAutoSizeColumnMode.Fill;
-                dataGridWorkers.Columns["Tn"].FillWeight = 30;
-
+                dataGridWorkers.Columns["Tn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridWorkers.Columns["Tn"].FillWeight = 40;
+                dataGridWorkers.Columns["Tn"].HeaderText = "Табельный номер";
+                dataGridWorkers.Columns["Name"].HeaderText = "Имя";
 
                 dataGridSalaries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridSalaries.MultiSelect = false;
@@ -145,7 +147,7 @@ namespace WorkersSalary
                             int id = reader.GetInt32("_id");
                             int tn = reader.GetInt32("Tn");
                             float salary = reader.GetFloat("Salary");
-                            int month = reader.GetInt32("Month");
+                            string month = months[reader.GetInt32("Month")];
 
                             Salary Salary = new Salary(id, tn, salary, month);
                             Salaries.Add(Salary);
@@ -174,6 +176,9 @@ namespace WorkersSalary
                 int Tn = (int)((DataGridView)sender).SelectedRows[0].Cells["Tn"].Value;
                 Salaries = GetSalaries(Tn);
                 dataGridSalaries.DataSource = Salaries;
+                dataGridSalaries.Columns["Tn"].HeaderText = "Табельный номер";
+                dataGridSalaries.Columns["Pay"].HeaderText = "Сумма";
+                dataGridSalaries.Columns["Month"].HeaderText = "Месяц";
                 dataGridSalaries.RowHeadersVisible = false;
                 dataGridSalaries.Columns["Id"].Visible = false;
             }
@@ -348,6 +353,105 @@ namespace WorkersSalary
             }
         }
 
+        //Кнопка добавления данных новой выплаты работнику
+        private void addSalary_Click(object sender, EventArgs e)
+        {
+            if (dataGridWorkers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необходимо выбрать сотрудника", "Внимание!");
+                return;
+            }
+
+            int salaryId;
+            Salary salary = new Salary();
+
+            SalaryForm salaryForm = new SalaryForm(salary);
+            salaryForm.Text = "Создать новую запись о зарплате";
+
+            if (salaryForm.ShowDialog() == DialogResult.OK)
+            {
+                salary.Tn = Workers[dataGridWorkers.CurrentRow.Index].Tn;
+
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand();
+                    command.Connection = connection;
+                    command.CommandText = "INSERT INTO Salary(Tn, Salary, Month) VALUES (@Tn, @Salary, @Month)";
+                    command.Parameters.Add(new SqliteParameter("@Tn", salary.Tn));
+                    command.Parameters.Add(new SqliteParameter("@Salary", salary.Pay));
+                    command.Parameters.Add(new SqliteParameter("@Month", Array.IndexOf(months, salary.Month)));
+
+                    //command.Parameters.Add(new SqliteParameter("@Month", salary.Month));
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = "SELECT last_insert_rowid()";
+                    salaryId = Convert.ToInt32(command.ExecuteScalar());
+                }
+
+                //обновить коллекцию и таблицу
+                Salaries = GetSalaries(Workers[dataGridWorkers.CurrentRow.Index].Tn);
+                dataGridSalaries.DataSource = Salaries;
+
+                //выделить добавленную строку
+                salaryId = Salaries.FindIndex(x => x.Id == salaryId);
+                dataGridSalaries.Rows[salaryId].Selected = true;
+                dataGridSalaries.CurrentCell = dataGridSalaries.SelectedRows[0].Cells[1];
+            }
+        }
+
+        //Кнопка изменения существующих данных выплаты рабтнику
+        private void changeSalary_Click(object sender, EventArgs e)
+        {
+            if (dataGridWorkers.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необходимо выбрать сотрудника", "Внимание!");
+                return;
+            }
+            //извлечь данные выбранной записи, запомнить что выбрано,
+            //если не выбрано - сообщить, вернуться
+            if (dataGridSalaries.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Необходимо выбрать запись из списка выплат", "Внимание!");
+                return;
+            }
+
+            //int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);//табельный номер выбранного сотрудника
+            int salaryId = Salaries[dataGridSalaries.CurrentRow.Index].Id; //ид - из-за сортировки по месяцу в запросе, индекс в колекции может измениться 
+
+            SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index]);
+            salaryForm.Text = "Изменить запись о зарплате";
+
+            if (salaryForm.ShowDialog() == DialogResult.OK)
+            {
+                //запрос на изменение данных
+                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand();
+                    command.Connection = connection;
+                    command.CommandText = "UPDATE Salary SET " +
+                                          "Salary = @Pay, " +
+                                          "Month = @Month " +
+                                          "Where _id = @Id";
+                    command.Parameters.Add(new SqliteParameter("@Pay", Salaries[dataGridSalaries.CurrentRow.Index].Pay));
+                    command.Parameters.Add(new SqliteParameter("@Month", Array.IndexOf(months, Salaries[dataGridSalaries.CurrentRow.Index].Month)));
+                    command.Parameters.Add(new SqliteParameter("@Id", Salaries[dataGridSalaries.CurrentRow.Index].Id));
+                    command.ExecuteNonQuery();
+                }
+
+                //обновить коллекцию и таблицу
+                Salaries = GetSalaries(Workers[dataGridWorkers.CurrentRow.Index].Tn);
+                dataGridSalaries.DataSource = Salaries;
+
+                //выделить изменённую строку
+                salaryId = Salaries.FindIndex(x => x.Id == salaryId);
+                dataGridSalaries.Rows[salaryId].Selected = true;
+                dataGridSalaries.CurrentCell = dataGridSalaries.SelectedRows[0].Cells[1];
+            }
+        }
+
+        //Кнопка удаления сущетвующих данных выплаты работнику
         private void deleteSalary_Click(object sender, EventArgs e)
         {
             //если не выбран - сообщить, вернуться
@@ -404,101 +508,6 @@ namespace WorkersSalary
                     dataGridSalaries.DataSource = null;
                 }
             }
-        }
-
-        private void changeSalary_Click(object sender, EventArgs e)
-        {
-            if (dataGridWorkers.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Необходимо выбрать сотрудника", "Внимание!");
-                return;
-            }
-            //извлечь данные выбранной записи, запомнить что выбрано,
-            //если не выбрано - сообщить, вернуться
-            if (dataGridSalaries.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Необходимо выбрать запись из списка выплат", "Внимание!");
-                return;
-            }
-
-            //int Tn = Convert.ToInt32( dataGridWorkers.SelectedRows[0].Cells["Tn"].Value);//табельный номер выбранного сотрудника
-            int salaryId = Salaries[dataGridSalaries.CurrentRow.Index].Id; //ид - из-за сортировки по месяцу в запросе, индекс в колекции может измениться 
-
-            SalaryForm salaryForm = new SalaryForm(Salaries[dataGridSalaries.CurrentRow.Index]);
-            salaryForm.Text = "Изменить запись о зарплате";
-
-            if (salaryForm.ShowDialog() == DialogResult.OK)
-            {
-                //запрос на изменение данных
-                using (SqliteConnection connection = new SqliteConnection(connectionString))
-                {
-                    connection.Open();
-                    SqliteCommand command = new SqliteCommand();
-                    command.Connection = connection;
-                    command.CommandText = "UPDATE Salary SET " +
-                                          "Salary = @Pay, " +
-                                          "Month = @Month " +
-                                          "Where _id = @Id";
-                    command.Parameters.Add(new SqliteParameter("@Pay", Salaries[dataGridSalaries.CurrentRow.Index].Pay));
-                    command.Parameters.Add(new SqliteParameter("@Month", Salaries[dataGridSalaries.CurrentRow.Index].Month));
-                    command.Parameters.Add(new SqliteParameter("@Id", Salaries[dataGridSalaries.CurrentRow.Index].Id));
-                    command.ExecuteNonQuery();
-                }
-
-                //обновить коллекцию и таблицу
-                Salaries = GetSalaries(Workers[dataGridWorkers.CurrentRow.Index].Tn);
-                dataGridSalaries.DataSource = Salaries;
-
-                //выделить изменённую строку
-                salaryId = Salaries.FindIndex(x => x.Id == salaryId);
-                dataGridSalaries.Rows[salaryId].Selected = true;
-                dataGridSalaries.CurrentCell = dataGridSalaries.SelectedRows[0].Cells[1];
-            }
-        }
-
-        private void addSalary_Click(object sender, EventArgs e)
-        {
-            if (dataGridWorkers.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Необходимо выбрать сотрудника", "Внимание!");
-                return;
-            }
-
-            int salaryId;
-            Salary salary = new Salary();
-
-            SalaryForm salaryForm = new SalaryForm(salary);
-            salaryForm.Text = "Создать новую запись о зарплате";
-
-            if (salaryForm.ShowDialog() == DialogResult.OK)
-            {
-                salary.Tn = Workers[dataGridWorkers.CurrentRow.Index].Tn;
-
-                using (SqliteConnection connection = new SqliteConnection(connectionString))
-                {
-                    connection.Open();
-                    SqliteCommand command = new SqliteCommand();
-                    command.Connection = connection;
-                    command.CommandText = "INSERT INTO Salary(Tn, Salary, Month) VALUES (@Tn, @Salary, @Month)";
-                    command.Parameters.Add(new SqliteParameter("@Tn", salary.Tn));
-                    command.Parameters.Add(new SqliteParameter("@Salary", salary.Pay));
-                    command.Parameters.Add(new SqliteParameter("@Month", salary.Month));
-                    command.ExecuteNonQuery();
-
-                    command.CommandText = "SELECT last_insert_rowid()";
-                    salaryId = Convert.ToInt32(command.ExecuteScalar());
-                }
-
-                //обновить коллекцию и таблицу
-                Salaries = GetSalaries(Workers[dataGridWorkers.CurrentRow.Index].Tn);
-                dataGridSalaries.DataSource = Salaries;
-
-                //выделить добавленную строку
-                salaryId = Salaries.FindIndex(x => x.Id == salaryId);
-                dataGridSalaries.Rows[salaryId].Selected = true;
-                dataGridSalaries.CurrentCell = dataGridSalaries.SelectedRows[0].Cells[1];
-            }
-
         }
     }
 }

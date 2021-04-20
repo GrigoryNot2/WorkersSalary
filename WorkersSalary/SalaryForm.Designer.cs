@@ -106,7 +106,7 @@ namespace WorkersSalary
             this.monthComboBox.Location = new System.Drawing.Point(10, 79);
             this.monthComboBox.Name = "monthComboBox";
             this.monthComboBox.Size = new System.Drawing.Size(307, 23);
-            this.monthComboBox.TabIndex = 12;
+            this.monthComboBox.TabIndex = 7;
             // 
             // SalaryForm
             // 
