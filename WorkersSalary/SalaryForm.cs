@@ -13,7 +13,6 @@ namespace WorkersSalary
     public partial class SalaryForm : Form
     {
         Salary salary;
-        List<Salary> Salaries;
         string[] months = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
 
         public SalaryForm()
