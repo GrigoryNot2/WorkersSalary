@@ -34,7 +34,6 @@ namespace WorkersSalary
 
             if (salary.Month != "")
             {
-                //MonthTb.Text = salary.Month.ToString();
                 monthComboBox.SelectedItem = salary.Month;
             }
         }
