@@ -195,38 +195,46 @@ namespace WorkersSalary
 
             if (workerForm.ShowDialog() == DialogResult.OK)
             {
-                //создать запрос на добавление
-                using (SqliteConnection connection = new SqliteConnection(connectionString))
+                try
                 {
-                    connection.Open();
-                    SqliteCommand command = new SqliteCommand();
-                    command.Connection = connection;
-                    command.CommandText = "INSERT INTO Workers (Tn, Name) VALUES (@Tn, @Name)";
-                    command.Parameters.Add(new SqliteParameter("@Tn", worker.Tn));
-                    command.Parameters.Add(new SqliteParameter("Name", worker.Name));
-                    //запрос на добавление
-                    command.ExecuteNonQuery();
-                    //Получить ид добавленного работника, чтобы потом его выделить в таблице
-                    command.CommandText = "SELECT last_insert_rowid()";
-                    index = Convert.ToInt32(command.ExecuteScalar());
+                    //создать запрос на добавление
+                    using (SqliteConnection connection = new SqliteConnection(connectionString))
+                    {
+                        connection.Open();
+                        SqliteCommand command = new SqliteCommand();
+                        command.Connection = connection;
+                        command.CommandText = "INSERT INTO Workers (Tn, Name) VALUES (@Tn, @Name)";
+                        command.Parameters.Add(new SqliteParameter("@Tn", worker.Tn));
+                        command.Parameters.Add(new SqliteParameter("Name", worker.Name));
+                        //запрос на добавление
+                        command.ExecuteNonQuery();
+                        //Получить ид добавленного работника, чтобы потом его выделить в таблице
+                        command.CommandText = "SELECT last_insert_rowid()";
+                        index = Convert.ToInt32(command.ExecuteScalar());
+                    }
+
+                    //обновить коллекцию и таблицу работников
+                    Workers = GetWorkers();
+                    dataGridWorkers.DataSource = Workers;
+                    index = Workers.FindIndex(x => x.Id == index);
+
+                    //выделить изменённую строку
+                    dataGridWorkers.Rows[index].Selected = true;
+                    dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
+                    //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
+
+                    //Обновить колекцию и таблицу зарплат
+                    int Tn = Workers[index].Tn;
+                    Salaries = GetSalaries(Tn);
+                    dataGridSalaries.DataSource = Salaries;
+                    dataGridSalaries.RowHeadersVisible = false;
+                    dataGridSalaries.Columns["Id"].Visible = false;
                 }
-
-                //обновить коллекцию и таблицу работников
-                Workers = GetWorkers();
-                dataGridWorkers.DataSource = Workers;
-                index = Workers.FindIndex(x => x.Id == index);
-
-                //выделить изменённую строку
-                dataGridWorkers.Rows[index].Selected = true;
-                dataGridWorkers.CurrentCell = dataGridWorkers.SelectedRows[0].Cells[1];
-                //richTextBox1.Text += $"{dataGridWorkers.CurrentRow}";
-
-                //Обновить колекцию и таблицу зарплат
-                int Tn = Workers[index].Tn;
-                Salaries = GetSalaries(Tn);
-                dataGridSalaries.DataSource = Salaries;
-                dataGridSalaries.RowHeadersVisible = false;
-                dataGridSalaries.Columns["Id"].Visible = false;
+                catch (Exception ex)
+                {
+                    richTextBox1.Text += $"{ex.Message}\n";
+                    MessageBox.Show($"{ex.Message}");
+                }
             }
         }
 
