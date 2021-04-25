@@ -313,6 +313,8 @@ namespace WorkersSalary
                     using (SqliteConnection connection = new SqliteConnection(connectionString + readWrite))
                     {
                         connection.Open();
+                        //'trololo'); drop table 'workers';
+                        //string queryInsert = $"INSERT INTO Workers (Tn, Name) VALUES ({worker.Tn}, {worker.Name})";
                         string queryInsert = "INSERT INTO Workers (Tn, Name) VALUES (@Tn, @Name)";
                         using (SqliteCommand command = new SqliteCommand(queryInsert, connection))
                         {
