@@ -25,10 +25,10 @@ namespace Exchnger_netFr_sqlSrv
             {
                 Application.Run(new operatorForm());
             }
-            else
-            {
-                MessageBox.Show("Ошибка", "Ошибка");
-            }
+            //else
+            //{
+            //    MessageBox.Show("Ошибка", "Ошибка");
+            //}
         }
     }
 }

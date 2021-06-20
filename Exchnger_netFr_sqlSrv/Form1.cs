@@ -88,21 +88,15 @@ namespace Exchnger_netFr_sqlSrv
                     return;
                 }
                 
-                textBox1.Text = Convert.ToString(command.Parameters["@s_log_db"].Value);
-                textBox2.Text = Convert.ToString(command.Parameters["@s_pass_db"].Value);
-                textBox3.Text = Convert.ToString(command.Parameters["@s_role_db"].Value);
+                //textBox1.Text = Convert.ToString(command.Parameters["@s_log_db"].Value);
+                //textBox2.Text = Convert.ToString(command.Parameters["@s_pass_db"].Value);
+                //textBox3.Text = Convert.ToString(command.Parameters["@s_role_db"].Value);
 
                 User.login = Convert.ToString(command.Parameters["@s_log_db"].Value);
                 User.pass = Convert.ToString(command.Parameters["@s_pass_db"].Value);
                 User.role = Convert.ToString(command.Parameters["@s_role_db"].Value);
                 User.id = Convert.ToInt32(command.Parameters["@id"].Value);
                 this.Close();
-
-
-
-
-
-
 
                 //SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, connection);
                 //DataSet ds = new DataSet();

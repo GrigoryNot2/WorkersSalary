@@ -12,5 +12,6 @@ namespace Exchnger_netFr_sqlSrv
         public static string pass { get; set; }
         public static string role { get; set; }
         public static int id {get; set;}
+        public static string name { get; set; }
     }
 }
