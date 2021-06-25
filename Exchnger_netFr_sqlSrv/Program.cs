@@ -16,7 +16,7 @@ namespace Exchnger_netFr_sqlSrv
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new loginForm());
             if (User.role == "User")
             {
                 Application.Run(new userForm());

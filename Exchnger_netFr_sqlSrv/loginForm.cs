@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 
 namespace Exchnger_netFr_sqlSrv
 {
-    public partial class Form1 : Form
+    public partial class loginForm : Form
     {
-        public Form1()
+        public loginForm()
         {
             InitializeComponent();
         }
@@ -78,9 +78,18 @@ namespace Exchnger_netFr_sqlSrv
                 };
                 command.Parameters.Add(idParam);
 
+                SqlParameter nameParam = new SqlParameter
+                {
+                    ParameterName = "@name",
+                    SqlDbType = SqlDbType.NVarChar,
+                    Size = 50,
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(nameParam);
+
                 command.ExecuteNonQuery();
 
-                textBox1.Text = textBox2.Text = ""; //сложнее подбирать вручную
+                textBox1.Text = textBox2.Text = ""; //сложнее подбирать пароль вручную
 
                 if (Convert.ToString(command.Parameters["@s_log_db"].Value) == "")
                 {
@@ -88,14 +97,11 @@ namespace Exchnger_netFr_sqlSrv
                     return;
                 }
                 
-                //textBox1.Text = Convert.ToString(command.Parameters["@s_log_db"].Value);
-                //textBox2.Text = Convert.ToString(command.Parameters["@s_pass_db"].Value);
-                //textBox3.Text = Convert.ToString(command.Parameters["@s_role_db"].Value);
-
                 User.login = Convert.ToString(command.Parameters["@s_log_db"].Value);
                 User.pass = Convert.ToString(command.Parameters["@s_pass_db"].Value);
                 User.role = Convert.ToString(command.Parameters["@s_role_db"].Value);
                 User.id = Convert.ToInt32(command.Parameters["@id"].Value);
+                User.name = Convert.ToString(command.Parameters["@name"].Value);
                 this.Close();
 
                 //SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, connection);
