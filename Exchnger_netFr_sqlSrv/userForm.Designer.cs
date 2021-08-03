@@ -75,7 +75,7 @@ namespace Exchnger_netFr_sqlSrv
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(30, 182);
+            this.label4.Location = new System.Drawing.Point(12, 182);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 13);
             this.label4.TabIndex = 6;
@@ -83,9 +83,9 @@ namespace Exchnger_netFr_sqlSrv
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(33, 212);
+            this.richTextBox1.Location = new System.Drawing.Point(2, 198);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(615, 208);
+            this.richTextBox1.Size = new System.Drawing.Size(671, 263);
             this.richTextBox1.TabIndex = 7;
             this.richTextBox1.Text = "";
             // 
