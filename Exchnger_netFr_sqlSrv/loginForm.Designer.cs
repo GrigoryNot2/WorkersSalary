@@ -103,7 +103,6 @@ namespace Exchnger_netFr_sqlSrv
             this.Controls.Add(this.textBox_pass);
             this.Controls.Add(this.textBox_login);
             this.Name = "loginForm";
-            this.Text = "Form1";
             this.Load += new System.EventHandler(this.loginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

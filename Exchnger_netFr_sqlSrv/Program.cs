@@ -8,14 +8,12 @@ namespace Exchnger_netFr_sqlSrv
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new loginForm());
             if (User.role == "User")
             {
@@ -25,10 +23,6 @@ namespace Exchnger_netFr_sqlSrv
             {
                 Application.Run(new operatorForm());
             }
-            //else
-            //{
-            //    MessageBox.Show("Ошибка", "Ошибка");
-            //}
         }
     }
 }

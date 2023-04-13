@@ -44,7 +44,7 @@ namespace Exchnger_netFr_sqlSrv
                         Value = textBox_pass.Text
                     };
                     command.Parameters.Add(passParam);
-                    //SqlParameter 1 = new SqlParameter()
+
                     SqlParameter userdbParam = new SqlParameter
                     {
                         ParameterName = "@s_log_db",
@@ -91,7 +91,7 @@ namespace Exchnger_netFr_sqlSrv
 
                     command.ExecuteNonQuery();
 
-                    textBox_login.Text = textBox_pass.Text = ""; //сложнее подбирать пароль вручную
+                    textBox_login.Text = textBox_pass.Text = ""; //очистка полей, сложнее подбирать пароль вручную
 
                     if (Convert.ToString(command.Parameters["@s_log_db"].Value) == "")
                     {
@@ -106,11 +106,6 @@ namespace Exchnger_netFr_sqlSrv
                     User.name = Convert.ToString(command.Parameters["@name"].Value);
                 }
                 this.Close();
-
-                //SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, connection);
-                //DataSet ds = new DataSet();
-                //sqlDataAdapter.Fill(ds);
-                //dataGridView1.DataSource = ds.Tables[0];
             }
         }
 
@@ -130,7 +125,7 @@ namespace Exchnger_netFr_sqlSrv
 
                 comboBoxLogins.DisplayMember = "app_log";
                 comboBoxLogins.ValueMember = "app_log";
-               comboBoxLogins.SelectedText = "app_log";
+                comboBoxLogins.SelectedText = "app_log";
             }
         }
 

@@ -15,6 +15,7 @@ namespace Exchnger_netFr_sqlSrv
         public operatorForm()
         {
             InitializeComponent();
+            this.Text = User.role + ": " + User.name;
         }
     }
 }
